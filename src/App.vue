@@ -4,8 +4,10 @@
     <div class="content">
       <the-navbar></the-navbar>
       <div class="content-detail">
-        <router-view></router-view>
-        <the-navigation></the-navigation>
+        <div>
+          <router-view></router-view>
+          <the-navigation></the-navigation>
+        </div>
       </div>
     </div>
   </div>
@@ -48,7 +50,7 @@ a {
   display: flex;
 
   &-detail {
-    flex-grow: 1;
+    width: 84%;
   }
 }
 
@@ -76,4 +78,5 @@ a {
   font-family: 'Google Sans Italic';
   src: url('./assets/font/GoogleSans-Italic.otf');
 }
+
 </style>

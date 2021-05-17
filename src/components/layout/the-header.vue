@@ -66,7 +66,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 5px 16px;
-    flex-grow: 1;
+    width: 84%;
     border-bottom: 2px solid #E9EBEE;
 
     .heading {

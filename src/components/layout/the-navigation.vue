@@ -1,20 +1,28 @@
 <template>
   <div class="navi">
-    <div class="navi-left">
-      <div class="btn btn-first-page"></div>
-      <div class="btn btn-prev-page"></div>
+    <div class="total-item">
+      <p>Hiển thị 1-10/1000 <span>Khách</span> hàng</p>
     </div>
-    <div class="navi-list-page">
-      <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-      </ul>
+    <div class="navi-list">
+      <div class="navi-left">
+        <div class="btn btn-first-page"></div>
+        <div class="btn btn-prev-page"></div>
+      </div>
+      <div class="navi-list-page">
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+        </ul>
+      </div>
+      <div class=navi-right>
+        <div class="btn btn-next-page"></div>
+        <div class="btn btn-last-page"></div>
+      </div>
     </div>
-    <div class=navi-right>
-      <div class="btn btn-next-page"></div>
-      <div class="btn btn-last-page"></div>
+    <div class="total-item">
+      <p>10 <span>Khách</span> hàng/trang</p>
     </div>
   </div>
 </template>
@@ -30,9 +38,10 @@ export default {
   display: flex;
   width: 100%;
   height: 56px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #E9EBEE;
+  padding: 0 32px;
 
   .btn {
     border-radius: 5px;
@@ -118,6 +127,23 @@ export default {
       height: 20px;
       cursor: pointer;
     }
+  }
+
+  .total-item {
+    font-size: 11px;
+    padding-top: 10px;
+
+    p {
+      span {
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .navi-list {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
   }
 }
 </style>

@@ -1,21 +1,27 @@
 <template>
   <div class="customer">
     <div class="heading">
-        <h2 class="heading-detail">Danh sách khách hàng</h2>
-      <btn-add @click.native="isShowCustomerAdd = true">
+      <h2 class="heading-detail">Danh sách khách hàng</h2>
+      <btn-add @click.native="isShowAddCustomer = true">
         <div class="icon-add"></div>
         <div class="icon-detail">Thêm khách hàng</div>
       </btn-add>
     </div>
     <div class="tools">
       <input-search searchDetail="Tìm kiếm theo mã, tên KH"></input-search>
-      <btn-reload></btn-reload>
+      <btn-reload @click.native="ShowReloadPage"></btn-reload>
     </div>
     <div class="main-content">
-      <table class="table">
+      <div v-if="isShowReload" class="reload-ctn">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      </div>
+      <table v-else class="table">
         <thead>
           <tr>
-            <th class="col col-customer-code col-customer-code-custom">Mã khách hàng</th>
+            <th class="col col-customer-code col-customer-code-custom">
+              <input type="text">
+              <div>abc</div>
+            </th>
             <th class="col col-customer-name">Họ và tên</th>
             <th class="col col-customer-gender">Giới tính</th>
             <th class="col col-customer-date-of-birth">Ngày sinh</th>
@@ -41,10 +47,10 @@
             <td class="col col-customer-money">Số tiền nợ</td>
             <td class="col col-customer-member-code">Mã tdẻ tdành viên</td>
             <td class="col col-customer-option col-customer-option-custom">
-              <div class="btn-option-ctn">
+              <div class="btn-option-ctn" @click="isShowEditCustomer = true">
                 <div class="btn-style-common btn-update">Sửa</div>
               </div>
-              <div class="btn-option-ctn">
+              <div class="btn-option-ctn" @click="isShowPopupDeleteCustomer = true">
                 <div class="btn-style-common btn-delete">Xóa</div>
               </div>
             </td>
@@ -60,12 +66,26 @@
             <td class="col col-customer-address">Địa chỉ</td>
             <td class="col col-customer-money">Số tiền nợ</td>
             <td class="col col-customer-member-code">Mã tdẻ tdành viên</td>
-            <td class="col col-customer-option">Tùy chọn</td>
+            <td class="col col-customer-option col-customer-option-custom">
+              <div class="btn-option-ctn" @click="isShowEditCustomer = true">
+                <div class="btn-style-common btn-update">Sửa</div>
+              </div>
+              <div class="btn-option-ctn" @click="isShowPopupDeleteCustomer = true">
+                <div class="btn-style-common btn-delete">Xóa</div>
+              </div>
+            </td>
           </tr>
+
         </tbody>
       </table>
     </div>
-    <add-customer key="add" :isShow="isShowCustomerAdd" :HiddenForm="HiddenFormAddCustomer"></add-customer>
+    <add-customer
+      key="add"
+      :isShow="isShowAddCustomer"
+      :HiddenForm="HiddenFormAddCustomer"
+    ></add-customer>
+    <edit-customer :isShow="isShowEditCustomer" :HiddenForm="HiddenFormEditCustomer"></edit-customer>
+    <popup-delete-customer :isShow="isShowPopupDeleteCustomer" :HiddenPopup="HiddenPopupDeleteCustomer"></popup-delete-customer>
   </div>
 </template>
 
@@ -74,28 +94,45 @@ import BtnAdd from '../components/common/btn-add.vue'
 import BtnReload from '../components/common/btn-reload.vue'
 import InputSearch from '../components/common/input-search.vue'
 import AddCustomer from '../pages/customer/add-customer.vue'
+import EditCustomer from '../pages/customer/edit-customer.vue'
+import PopupDeleteCustomer from '../pages/customer/warning-popup-delete-customer'
 
 export default {
   data () {
     return {
-      isShowCustomerAdd: false
+      isShowAddCustomer: false,
+      isShowEditCustomer: false,
+      isShowPopupDeleteCustomer: false,
+      isShowReload: false
     }
   },
   components: {
     BtnAdd,
     BtnReload,
     InputSearch,
-    AddCustomer
+    AddCustomer,
+    EditCustomer,
+    PopupDeleteCustomer
   },
   methods: {
     HiddenFormAddCustomer () {
-      this.isShowCustomerAdd = false
+      this.isShowAddCustomer = false
+    },
+    HiddenFormEditCustomer () {
+      this.isShowEditCustomer = false
+    },
+    HiddenPopupDeleteCustomer () {
+      this.isShowPopupDeleteCustomer = false
+    },
+    ShowReloadPage () {
+      this.isShowReload = true
+      setTimeout(() => {
+        this.isShowReload = false
+      }, 1500)
     }
   }
 }
 </script>
-,
-    InputSearch
 <style lang="scss" scoped>
 .customer {
   height: calc(100vh - 108px);
@@ -156,9 +193,12 @@ export default {
     }
 
     .table {
-      display: block;
       white-space: nowrap;
       border-collapse: collapse;
+
+      tr {
+        border-bottom: 1px solid #cacaca;
+      }
 
       thead {
         tr {
@@ -180,19 +220,27 @@ export default {
 
       th,
       td {
-        font-size: 13px;
-        border-bottom: 1px solid #cacaca;
+        font-size: 12px;
         padding: 10px;
         background-color: white;
       }
 
+      tbody {
+        tr {
+          td.col-customer-option {
+            position: sticky;
+            top: 0;
+            right: 0;
+          }
+        }
+      }
+
       .col {
-        display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
         &-customer-code {
+          min-width: 200px;
           padding-right: 20px;
-          width: 15%;
           position: sticky;
           top: 0;
           left: 0;
@@ -204,45 +252,47 @@ export default {
         }
 
         &-customer-name {
-          width: 15%;
+          min-width: 200px;
         }
 
         &-customer-gender {
-          width: 10%;
+          min-width: 250px;
         }
 
         &-customer-date-of-birth {
-          width: 15%;
+          min-width: 300px;
         }
 
         &-customer-group {
-          width: 15%;
+          min-width: 400px;
         }
 
         &-customer-phone {
-          width: 15%;
+          min-width: 200px;
         }
 
         &-customer-email {
-          width: 15%;
+          min-width: 250px;
         }
 
         &-customer-address {
-          width: 20%;
+          min-width: 300px;
         }
 
         &-customer-money {
-          width: 15%;
+          min-width: 300px;
         }
         &-customer-member-code {
-          width: 20%;
+          min-width: 200px;
         }
 
         &-customer-option {
-          width: 20%;
+          display: flex;
+          min-width: 200px;
           position: sticky;
+          border-left: 1px solid #e9ebee;
           right: 0;
-          top: 0;
+          top: 0px;
 
           &-custom {
             .btn-option-ctn {
@@ -252,11 +302,81 @@ export default {
               font-weight: normal;
               text-align: center;
               transition: all 0.3s ease;
+
+              .btn-style-common {
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: all 0.5s;
+              }
+            }
+
+            .btn-update {
+              background-color: #0075ff;
+              color: #fff;
+              margin-right: 10px;
+
+              &:hover {
+                background-color: #004faa;
+              }
+            }
+
+            .btn-delete {
+              background-color: #f65454;
+              color: #fff;
+
+              &:hover {
+                background-color: #f30909;
+              }
             }
           }
         }
       }
     }
   }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 95%;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.reload-ctn {
+  background-color: rgba(44, 130, 201, 0.5);
+  width: 100%;
+  height: 100%;
 }
 </style>

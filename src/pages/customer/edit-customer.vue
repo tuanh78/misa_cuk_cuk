@@ -3,7 +3,7 @@
     <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
       <div v-if="isShow">
         <div id="draggable-container" class="add-customer" @keydown.27="isShowPopup = true" ref="draggableContainer" @mousedown="dragMouseDown">
-          <h3 class="add-title">Thông tin khách hàng</h3>
+          <h3 class="add-title">Sửa thông tin khách hàng</h3>
 
           <div class="input-group">
             <div class="input-group-common">
@@ -103,7 +103,7 @@
           </div>
           <div class="btn-close" @click="isShowPopup = true"></div>
         </div>
-        <warning-add-customer :isShow="isShowPopup" :HiddenPopup="HiddenPopup" :HiddenPopupAndForm="HiddenPopupAndForm"></warning-add-customer>
+        <warning-edit-customer :isShow="isShowPopup" :HiddenPopup="HiddenPopup" :HiddenPopupAndForm="HiddenPopupAndForm"></warning-edit-customer>
         <div class="mask"></div>
       </div>
     </transition>
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import WarningAddCustomer from './warning-popup-add-customer.vue'
+import WarningEditCustomer from './warning-popup-edit-customer.vue'
 
 export default {
   data () {
@@ -126,7 +126,7 @@ export default {
     }
   },
   components: {
-    WarningAddCustomer
+    WarningEditCustomer
   },
   props: {
     isShow: {
@@ -422,13 +422,5 @@ export default {
     background-color: #cacaca;
   }
 }
-
-// #draggable-container {
-//   position: absolute;
-//   z-index: 9;
-// }
-// #draggable-header {
-//   z-index: 10;
-// }
 
 </style>
