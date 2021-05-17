@@ -11,7 +11,7 @@
 export default {
   props: {
     searchDetail: {
-      type: Text,
+      type: String,
       default: 'Tìm kiếm theo mã, Tên KH'
     }
   }

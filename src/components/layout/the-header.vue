@@ -37,25 +37,27 @@ export default {
   &__left {
     display: flex;
     align-items: center;
-    padding: 12px 0px 12px 16px;
-    width: 12%;
-    border-right: 2px solid rgb(187, 187, 187);
+    justify-content: center;
+    padding: 12px 0;
+    width: 16%;
+    border-right: 2px solid #E9EBEE;
     .btn-menu {
       background-image: url('../../assets/img/toggle.png');
       background-size: contain;
-      background-position: center;
-      width: 30px;
-      height: 30px;
+      background-position: left;
+      background-repeat: no-repeat;
+      width: calc(20% - 16px );
+      height: 25px;
       margin-right: 10px;
     }
 
     .logo {
       background-image: url('../../assets/cukcuk-logo.png');
       background-size: contain;
-      background-position: center;
+      background-position: left;
       background-repeat: no-repeat;
-      width: 100px;
-      height: 30px;
+      width: calc(70% - 16px);
+      height: 100%;
     }
   }
 
@@ -65,7 +67,7 @@ export default {
     align-items: center;
     padding: 5px 16px;
     flex-grow: 1;
-    border-bottom: 2px solid rgb(202, 202, 202);
+    border-bottom: 2px solid #E9EBEE;
 
     .heading {
       span {

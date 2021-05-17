@@ -32,7 +32,7 @@ export default {
   height: 56px;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid #cacaca;
+  border-bottom: 2px solid #E9EBEE;
 
   .btn {
     border-radius: 5px;
@@ -40,7 +40,7 @@ export default {
   }
 
   .btn:hover {
-    background-color: #BBBBBB;
+    background-color: #019160;
   }
 
   &-left {
@@ -48,22 +48,22 @@ export default {
     margin-right: 20px;
     .btn-first-page {
       background-image: url('../../assets/icon/btn-firstpage.svg');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       margin-right: 25px;
       cursor: pointer;
     }
 
     .btn-prev-page {
       background-image: url('../../assets/icon/btn-prev-page.svg');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       cursor: pointer;
     }
   }
@@ -73,11 +73,12 @@ export default {
       display: flex;
 
       li {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 13px;
         border-radius: 50%;
-        background-color: #BBBBBB;
+        background-color: #E9EBEE;
         text-align: center;
         cursor: pointer;
         transition: all 0.5s;
@@ -99,22 +100,22 @@ export default {
       margin-left: 20px;
     .btn-last-page {
       background-image: url('../../assets/icon/btn-lastpage.svg');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       margin-left: 25px;
       cursor: pointer;
     }
 
     .btn-next-page {
       background-image: url('../../assets/icon/btn-next-page.svg');
-      background-size: contain;
+      background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
-      width:30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       cursor: pointer;
     }
   }

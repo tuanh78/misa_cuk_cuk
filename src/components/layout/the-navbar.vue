@@ -48,10 +48,10 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
-  width: 12%;
-  height: 80vh;
-  border-right: 2px solid rgb(202, 202, 202);
-  border-bottom: 2px solid rgb(202, 202, 202);
+  width: 16%;
+  height: calc(100vh - 52px);
+  border-right: 2px solid #E9EBEE;
+  border-bottom: 2px solid #E9EBEE;
 
   &__list {
     .icon {
@@ -107,7 +107,6 @@ export default {
   }
 
   &__item {
-    margin-bottom: 10px;
     cursor: pointer;
 
     &:hover {

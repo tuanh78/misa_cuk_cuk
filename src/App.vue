@@ -48,7 +48,7 @@ a {
   display: flex;
 
   &-detail {
-    width: 88%;
+    flex-grow: 1;
   }
 }
 

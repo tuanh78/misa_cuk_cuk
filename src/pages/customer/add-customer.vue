@@ -1,115 +1,190 @@
 <template>
-  <div>
-    <div class="add-customer">
-      <h3 class="add-title">Thông tin khách hàng</h3>
+  <div class="customer-ctn">
+    <transition enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
+      <div v-if="isShow">
+        <div id="draggable-container" class="add-customer" @keydown.27="isShowPopup = true" ref="draggableContainer" @mousedown="dragMouseDown">
+          <h3 class="add-title">Thông tin khách hàng</h3>
 
-      <div class="input-group">
-        <div class="input-group-common">
-          <div class="avatar">
-            <div class="avatar-img">
-              <input type="file" id="avatar" hidden />
-              <label class="img-avt"></label>
+          <div class="input-group">
+            <div class="input-group-common">
+              <div class="avatar">
+                <div class="avatar-img">
+                  <input type="file" id="avatar" hidden />
+                  <label class="img-avt"></label>
+                </div>
+                <p class="avatar-detail">
+                  Vui lòng chọn ảnh có định dạng
+                  <span>.jpg, .jpeg, .png, .gif.</span>
+                </p>
+              </div>
+              <div class="user-info-comon">
+                <div class="input-item input-style-common">
+                  <label>Mã khách hàng (<span>*</span>)</label>
+                  <input ref="code" type="text" class="invalid-value"/>
+                </div>
+                <div class="input-item input-style-common">
+                  <label>Họ và tên (<span>*</span>)</label>
+                  <input type="text" />
+                </div>
+                <div class="input-item input-style-common">
+                  <label>Mã thẻ thành viên</label>
+                  <input type="text" />
+                </div>
+                <div class="input-item input-style-common">
+                  <label>Nhóm khách hàng</label>
+                  <input type="text" />
+                </div>
+                <div class="input-item input-style-common">
+                  <label>Ngày sinh</label>
+                  <input type="text" />
+                </div>
+                <div class="input-item input-style-common input-gender">
+                  <label class="gender-title">Giới tính</label>
+                  <div class="gender-item">
+                    <input type="radio" name="size" id="nam" class="form__radio-input">
+                    <label class="form__label-radio form__radio-label" for="nam">
+                      <span class="form__radio-button"></span> Nam
+                    </label>
+                  </div>
+                  <div class="gender-item">
+                    <input type="radio" name="size" id="nu" class="form__radio-input">
+                    <label class="form__label-radio form__radio-label" for="nu">
+                      <span class="form__radio-button"></span> Nữ
+                    </label>
+                  </div>
+                  <div class="gender-item">
+                    <input type="radio" name="size" id="khac" class="form__radio-input">
+                    <label class="form__label-radio form__radio-label" for="khac">
+                      <span class="form__radio-button"></span> Khác
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="avatar-detail">
-              Vui lòng chọn ảnh có định dạng
-              <span>.jpg, .jpeg, .png, .gif.</span>
-            </p>
+
+            <div class="input-group-detail">
+              <div class="input-info-item">
+                <div class="input-style-common input-style-info">
+                  <label>Email</label>
+                  <input type="text" />
+                </div>
+                <div class="input-style-common input-style-info">
+                  <label>Số điện thoại (<span>*</span>)</label>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="input-info-item">
+                <div class="input-style-common input-style-info">
+                  <label>Tên công ty</label>
+                  <input type="text" />
+                </div>
+                <div class="input-style-common input-style-info">
+                  <label>Mã số thuế</label>
+                  <input type="text" />
+                </div>
+              </div>
+              <div class="input-style-common input-style-info">
+                <label>Địa chỉ</label>
+                <input type="text" />
+              </div>
+            </div>
           </div>
-          <div class="user-info-comon">
-            <div class="input-item input-style-common">
-              <label>Mã khách hàng (<span>*</span>)</label>
-              <input type="text" class="invalid-value"/>
+
+          <div class="btn">
+            <div class="btn-delete" @click="isShowPopup = true">
+              Hủy
             </div>
-            <div class="input-item input-style-common">
-              <label>Họ và tên (<span>*</span>)</label>
-              <input type="text" />
-            </div>
-            <div class="input-item input-style-common">
-              <label>Mã thẻ thành viên</label>
-              <input type="text" />
-            </div>
-            <div class="input-item input-style-common">
-              <label>Nhóm khách hàng</label>
-              <input type="text" />
-            </div>
-            <div class="input-item input-style-common">
-              <label>Ngày sinh</label>
-              <input type="text" />
-            </div>
-            <div class="input-item input-style-common input-gender">
-              <label class="gender-title">Giới tính</label>
-              <div class="gender-item">
-                <input type="radio" name="size" id="nam" class="form__radio-input">
-                <label class="form__label-radio form__radio-label" for="nam">
-                  <span class="form__radio-button"></span> Nam
-                </label>
-              </div>
-              <div class="gender-item">
-                <input type="radio" name="size" id="nu" class="form__radio-input">
-                <label class="form__label-radio form__radio-label" for="nu">
-                  <span class="form__radio-button"></span> Nữ
-                </label>
-              </div>
-              <div class="gender-item">
-                <input type="radio" name="size" id="khac" class="form__radio-input">
-                <label class="form__label-radio form__radio-label" for="khac">
-                  <span class="form__radio-button"></span> Khác
-                </label>
-              </div>
+
+            <div class="btn-save">
+              <div class="icon-save"></div>
+              Lưu
             </div>
           </div>
+          <div class="btn-close" @click="isShowPopup = true"></div>
         </div>
-
-        <div class="input-group-detail">
-          <div class="input-info-item">
-            <div class="input-style-common input-style-info">
-              <label>Email</label>
-              <input type="text" />
-            </div>
-            <div class="input-style-common input-style-info">
-              <label>Số điện thoại (<span>*</span>)</label>
-              <input type="text" />
-            </div>
-          </div>
-
-          <div class="input-info-item">
-            <div class="input-style-common input-style-info">
-              <label>Tên công ty</label>
-              <input type="text" />
-            </div>
-            <div class="input-style-common input-style-info">
-              <label>Mã số thuế</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div class="input-style-common input-style-info">
-            <label>Địa chỉ</label>
-            <input type="text" />
-          </div>
-        </div>
+        <warning-add-customer :isShow="isShowPopup" :HiddenPopup="HiddenPopup" :HiddenPopupAndForm="HiddenPopupAndForm"></warning-add-customer>
+        <div class="mask"></div>
       </div>
-
-      <div class="btn">
-        <div class="btn-delete">
-          Hủy
-        </div>
-
-        <div class="btn-save">
-          <div class="icon-save"></div>
-          Lưu
-        </div>
-      </div>
-      <div class="btn-close"></div>
-    </div>
-    <div class="mask"></div>
+    </transition>
   </div>
 </template>
 
 <script>
-export default {}
+import WarningAddCustomer from './warning-popup-customer.vue'
+
+export default {
+  data () {
+    return {
+      isShowPopup: false,
+      positions: {
+        clientX: undefined,
+        clientY: undefined,
+        movementX: 0,
+        movementY: 0
+      }
+    }
+  },
+  components: {
+    WarningAddCustomer
+  },
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false
+    },
+    HiddenForm: {
+      type: Function
+    }
+  },
+  methods: {
+    HiddenPopup () {
+      this.isShowPopup = false
+    },
+    HiddenPopupAndForm () {
+      this.HiddenForm()
+      this.isShowPopup = false
+    },
+    dragMouseDown: function (event) {
+      // event.preventDefault()
+      // get the mouse cursor position at startup:
+      this.positions.clientX = event.clientX
+      this.positions.clientY = event.clientY
+      document.onmousemove = this.elementDrag
+      document.onmouseup = this.closeDragElement
+    },
+    elementDrag: function (event) {
+      event.preventDefault()
+      this.positions.movementX = this.positions.clientX - event.clientX
+      this.positions.movementY = this.positions.clientY - event.clientY
+      this.positions.clientX = event.clientX
+      this.positions.clientY = event.clientY
+      // set the element's new position:
+      this.$refs.draggableContainer.style.top = (this.$refs.draggableContainer.offsetTop - this.positions.movementY) + 'px'
+      this.$refs.draggableContainer.style.left = (this.$refs.draggableContainer.offsetLeft - this.positions.movementX) + 'px'
+    },
+    closeDragElement () {
+      document.onmouseup = null
+      document.onmousemove = null
+    }
+  },
+  watch: {
+    isShow () {
+      this.$nextTick(() => {
+        if (this.$refs.code) {
+          this.$refs.code.focus()
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+.customer-ctn {
+  position: relative;
+  z-index: 6;
+}
 .add-customer {
   position: fixed;
   width: 800px;
@@ -118,17 +193,17 @@ export default {}
   transform: translate(-50%, -50%);
   background-color: #fff;
   border-radius: 5px;
-  padding: 20px;
-  z-index: 10;
+  z-index: 6;
 
   .add-title {
     text-transform: uppercase;
     font-family: "Google Sans Bold";
-    margin-bottom: 15px;
+    padding: 20px 20px 15px 20px;
   }
 }
 
 .input-group {
+  padding: 0 20px;
   &-common {
     display: flex;
     margin-bottom: 20px;
@@ -137,13 +212,13 @@ export default {}
      width: 200px;
      margin-right: 30px;
     .img-avt {
-      background-image: url("../../assets/img/default-avatar.jpg");
+      background-image: url(/img/default-avatar.d40830f2.jpg);
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       border: 1px solid #bbbbbb;
       margin-right: 20px;
@@ -179,6 +254,7 @@ export default {}
       .gender-item {
         display: flex;
         width: 33%;
+        padding-bottom: 0px;
       }
 
       .gender-title {
@@ -219,7 +295,7 @@ export default {}
   width: 100%;
   height: 100%;
   background-color: rgba(127, 140, 141, 0.5);
-  z-index: 9;
+  z-index: 5;
 }
 
 .form__radio-input {
@@ -285,12 +361,13 @@ export default {}
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 20px;
+  padding: 20px;
 
   &-delete {
     padding: 10px;
     border-radius: 4px;
     margin-right: 20px;
+    font-size: 13px;
     cursor: pointer;
     transition: all 0.5s;
 
@@ -307,6 +384,7 @@ export default {}
     display: flex;
     align-items: center;
     cursor: pointer;
+    font-size: 13px;
     transition: all 0.5s;
 
     &:hover {
@@ -344,5 +422,13 @@ export default {}
     background-color: #cacaca;
   }
 }
+
+// #draggable-container {
+//   position: absolute;
+//   z-index: 9;
+// }
+// #draggable-header {
+//   z-index: 10;
+// }
 
 </style>
