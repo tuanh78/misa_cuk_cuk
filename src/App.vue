@@ -34,6 +34,7 @@ export default {
 
 body {
   font-family: 'Google Sans', sans-serif;
+  font-size: 13px;
 }
 
 ul {
@@ -50,7 +51,7 @@ a {
   display: flex;
 
   &-detail {
-    width: 84%;
+    width: calc(100% - 226px);
   }
 }
 

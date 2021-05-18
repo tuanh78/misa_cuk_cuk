@@ -4,32 +4,42 @@
       <ul>
         <li class="nav__item">
           <router-link to="/">
-            <div class="icon icon__overview"></div>
-            Tổng quan
+            <div class="icon__overview">
+              <div class="icon icon__overview-img"></div>
+            </div>
+            <div class="nav__item-detail">Tổng quan</div>
           </router-link>
         </li>
         <li class="nav__item">
           <router-link to="/report">
-            <div class="icon icon__report"></div>
-            Báo cáo
+            <div class="icon__report">
+              <div class="icon icon__report-img"></div>
+            </div>
+            <div class="nav__item-detail">Báo cáo</div>
           </router-link>
         </li>
         <li class="nav__item">
           <router-link to="/by">
-            <div class="icon icon__by"></div>
-            Mua hàng
+            <div class="icon__by">
+              <div class="icon icon__by-img"></div>
+            </div>
+            <div class="nav__item-detail">Mua hàng</div>
           </router-link>
         </li>
         <li class="nav__item">
           <router-link to="/customers">
-            <div class="icon icon__list-customer"></div>
-            Danh mục khách hàng
+            <div class="icon__list-customer">
+              <div class="icon icon__list-customer-img"></div>
+            </div>
+            <div class="nav__item-detail">Danh mục khách hàng</div>
           </router-link>
         </li>
         <li class="nav__item">
           <router-link to="/setting">
-            <div class="icon icon__setting"></div>
-            Thiết lập hệ thống
+            <div class="icon__setting">
+              <div class="icon icon__setting-img"></div>
+            </div>
+            <div class="nav__item-detail">Thiết lập hệ thống</div>
           </router-link>
         </li>
       </ul>
@@ -48,10 +58,9 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
-  width: 16%;
-  height: calc(100vh - 52px);
-  border-right: 2px solid #E9EBEE;
-  border-bottom: 2px solid #E9EBEE;
+  width: 226px;
+  height: calc(100vh - 48px);
+  border-right: 1px solid #E9EBEE;
 
   &__list {
     .icon {
@@ -60,74 +69,94 @@ export default {
       margin-right: 10px;
 
       &__overview {
-        background-image: url('../../assets/icon/dashboard.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 20px;
-        height: 20px;
+        padding: 12px 10px 12px 16px;
+        &-img {
+          background-image: url('../../assets/icon/dashboard.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 20px;
+        }
       }
 
       &__report {
-        background-image: url('../../assets/icon/report.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 20px;
-        height: 20px;
+        padding: 12px 10px 12px 16px;
+        &-img {
+          background-image: url('../../assets/icon/report.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 20px;
+        }
       }
 
       &__by {
-        background-image: url('../../assets/icon/dashboard.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 20px;
-        height: 20px;
+        padding: 12px 10px 12px 16px;
+        &-img {
+          background-image: url('../../assets/icon/dashboard.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 20px;
+        }
       }
 
       &__list-customer {
-        background-image: url('../../assets/icon/dic-employee.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 20px;
-        height: 20px;
+        padding: 12px 10px 12px 16px;
+        &-img {
+          background-image: url('../../assets/icon/dic-employee.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 20px;
+        }
       }
 
       &__setting {
-        background-image: url('../../assets/icon/setting.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 20px;
-        height: 20px;
+        padding: 12px 10px 12px 16px;
+        &-img {
+          background-image: url('../../assets/icon/setting.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
 
   &__item {
     cursor: pointer;
+    height: 44px;
+
+    &-detail {
+      font-family: $font-family-label;
+      color: $color-label;
+    }
 
     &:hover {
-      background-color: #e5e5e5;
-      a {
-        color: #000;
+      background-color: $color-light-gray;
+      .nav__item-detail {
+        color: $color-black;
       }
     }
 
     a {
       display: flex;
-      color: #515252;
-      padding: 12px 15px;
-      font-weight: normal;
-      font-size: 13px;
+      align-items: center;
     }
   }
 }
 
 .router-link-exact-active {
-  background-color: #019160;
-  color: #fff !important;
+  background-color: $color-green-default;
+  .nav__item-detail {
+    color: #fff !important;
+  }
 }
 </style>

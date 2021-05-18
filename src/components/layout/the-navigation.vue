@@ -40,7 +40,6 @@ export default {
   height: 56px;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #E9EBEE;
   padding: 0 32px;
 
   .btn {

@@ -13,17 +13,21 @@ export default {
 <style lang="scss" scoped>
 .btn-add {
   display: flex;
-  padding: 12px 16px;
-  border-radius: 5px;
-  font-size: 13px;
-  color: #fff;
-  font-weight: normal;
-  background-color: #019160;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+  color: $color-white;
+  background-color: $color-green-default;
   cursor: pointer;
   transition: all 0.5s;
+  height: 40px;
 
   &:hover {
-    background-color: #2FBE8E;
+    background-color: $color-green-hover;
+  }
+
+  &:active {
+    background-color: $color-green-primary;
   }
 }
 </style>

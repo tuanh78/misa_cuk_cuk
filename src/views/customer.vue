@@ -13,69 +13,63 @@
     </div>
     <div class="main-content">
       <div v-if="isShowReload" class="reload-ctn">
-        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <div class="lds-ring">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
-      <table v-else class="table">
+      <table v-else class="table-customer">
         <thead>
-          <tr>
-            <th class="col col-customer-code col-customer-code-custom">
-              <input type="text">
-              <div>abc</div>
-            </th>
-            <th class="col col-customer-name">Họ và tên</th>
-            <th class="col col-customer-gender">Giới tính</th>
-            <th class="col col-customer-date-of-birth">Ngày sinh</th>
-            <th class="col col-customer-group">Nhóm khách hàng</th>
-            <th class="col col-customer-phone">Điện thoại</th>
-            <th class="col col-customer-email">Email</th>
-            <th class="col col-customer-address">Địa chỉ</th>
-            <th class="col col-customer-money">Số tiền nợ</th>
-            <th class="col col-customer-member-code">Mã thẻ thành viên</th>
-            <th class="col col-customer-option">Tùy chọn</th>
+          <tr class="border-bottom">
+            <th class="input-ctn"></th>
+            <th class="number">#</th>
+            <th class="customer-code">Mã khách hàng</th>
+            <th class="fullname">Họ và tên</th>
+            <th class="gender">Giới tính</th>
+            <th class="date-of-birth">Ngày sinh</th>
+            <th class="customer-group">Nhóm khách hàng</th>
+            <th class="phone-number">Điện thoại</th>
+            <th class="email">Email</th>
+            <th class="address">Địa chỉ</th>
+            <th class="money-debt">Số tiền nợ</th>
+            <th class="customer-card-code">Mã thẻ thành viên</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th class="col col-customer-code">Mã khách hàng</th>
-            <td class="col col-customer-name">Họ và tên</td>
-            <td class="col col-customer-gender">Giới tính</td>
-            <td class="col col-customer-date-of-birth">Ngày sinh</td>
-            <td class="col col-customer-group">Nhóm khách hàng</td>
-            <td class="col col-customer-phone">Điện tdoại</td>
-            <td class="col col-customer-email">Email</td>
-            <td class="col col-customer-address">Địa chỉ</td>
-            <td class="col col-customer-money">Số tiền nợ</td>
-            <td class="col col-customer-member-code">Mã tdẻ tdành viên</td>
-            <td class="col col-customer-option col-customer-option-custom">
-              <div class="btn-option-ctn" @click="isShowEditCustomer = true">
-                <div class="btn-style-common btn-update">Sửa</div>
+          <tr class="border-bottom" v-for="(customer, index) in customers" :key="index">
+            <th class="input-icon-ctn input-ctn">
+              <div class="cntr">
+                <label for="cbx" class="label-cbx">
+                  <input id="cbx" type="checkbox" class="invisible" />
+                  <div class="checkbox">
+                    <svg width="20px" height="20px" viewBox="0 0 20 20">
+                      <path
+                        d="M3,1 L17,1 L17,1 C18.1045695,1 19,1.8954305 19,3 L19,17 L19,17 C19,18.1045695 18.1045695,19 17,19 L3,19 L3,19 C1.8954305,19 1,18.1045695 1,17 L1,3 L1,3 C1,1.8954305 1.8954305,1 3,1 Z"
+                      ></path>
+                      <polyline points="4 11 8 15 16 6"></polyline>
+                    </svg>
+                  </div>
+                </label>
               </div>
-              <div class="btn-option-ctn" @click="isShowPopupDeleteCustomer = true">
-                <div class="btn-style-common btn-delete">Xóa</div>
-              </div>
+            </th>
+            <td class="number">{{ index }}</td>
+            <td class="customer-code">{{ customer.customerCode }}</td>
+            <td class="fullname">{{ customer.fullName}}</td>
+            <td class="gender">
+              <span v-if="customer.gender == 0">Nam</span>
+              <span v-else-if="customer.gender == 1">Nữ</span>
+              <span v-else>Khác</span>
             </td>
+            <td class="date-of-birtd">{{ customer.dateOfBirth }}</td>
+            <td class="customer-group">{{ customer.dateOfBirth }}</td>
+            <td class="phone-number">{{ customer.phoneNumber }}</td>
+            <td class="email">{{ customer.email }}</td>
+            <td class="address">{{customer.address}}</td>
+            <td class="money-debt">Số tiền nợ</td>
+            <td class="customer-card-code">{{ customer.memberCardCode}}</td>
           </tr>
-          <tr>
-            <th class="col col-customer-code">Mã khách hàng</th>
-            <td class="col col-customer-name">Họ và tên</td>
-            <td class="col col-customer-gender">Giới tính</td>
-            <td class="col col-customer-date-of-birth">Ngày sinh</td>
-            <td class="col col-customer-group">Nhóm khách hàng</td>
-            <td class="col col-customer-phone">Điện tdoại</td>
-            <td class="col col-customer-email">Email</td>
-            <td class="col col-customer-address">Địa chỉ</td>
-            <td class="col col-customer-money">Số tiền nợ</td>
-            <td class="col col-customer-member-code">Mã tdẻ tdành viên</td>
-            <td class="col col-customer-option col-customer-option-custom">
-              <div class="btn-option-ctn" @click="isShowEditCustomer = true">
-                <div class="btn-style-common btn-update">Sửa</div>
-              </div>
-              <div class="btn-option-ctn" @click="isShowPopupDeleteCustomer = true">
-                <div class="btn-style-common btn-delete">Xóa</div>
-              </div>
-            </td>
-          </tr>
-
         </tbody>
       </table>
     </div>
@@ -84,8 +78,14 @@
       :isShow="isShowAddCustomer"
       :HiddenForm="HiddenFormAddCustomer"
     ></add-customer>
-    <edit-customer :isShow="isShowEditCustomer" :HiddenForm="HiddenFormEditCustomer"></edit-customer>
-    <popup-delete-customer :isShow="isShowPopupDeleteCustomer" :HiddenPopup="HiddenPopupDeleteCustomer"></popup-delete-customer>
+    <edit-customer
+      :isShow="isShowEditCustomer"
+      :HiddenForm="HiddenFormEditCustomer"
+    ></edit-customer>
+    <popup-delete-customer
+      :isShow="isShowPopupDeleteCustomer"
+      :HiddenPopup="HiddenPopupDeleteCustomer"
+    ></popup-delete-customer>
   </div>
 </template>
 
@@ -96,15 +96,21 @@ import InputSearch from '../components/common/input-search.vue'
 import AddCustomer from '../pages/customer/add-customer.vue'
 import EditCustomer from '../pages/customer/edit-customer.vue'
 import PopupDeleteCustomer from '../pages/customer/warning-popup-delete-customer'
+const axios = require('axios')
 
 export default {
   data () {
     return {
+      customers: null,
       isShowAddCustomer: false,
       isShowEditCustomer: false,
       isShowPopupDeleteCustomer: false,
       isShowReload: false
     }
+  },
+  created: async function () {
+    const res = await axios.get('http://localhost:2986/api/v1/Customers')
+    this.customers = res.data
   },
   components: {
     BtnAdd,
@@ -135,24 +141,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 .customer {
-  height: calc(100vh - 108px);
-  padding: 10px;
+  height: calc(100vh - 104px);
+  padding: 12px;
 
   .heading {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
     &-detail {
-      font-family: "Google Sans Light";
+      font-family: $font-family-title;
+      font-size: $font-size-title;
     }
     .icon-add {
       background-image: url("../assets/icon/add.png");
       background-repeat: no-repeat;
       background-position: center;
-      background-size: contain;
+      background-size: cover;
       width: 20px;
       height: 20px;
-      margin-right: 5px;
+      margin-right: 8px;
     }
   }
 
@@ -164,174 +171,100 @@ export default {
 
   .main-content {
     overflow: auto;
-    width: 100%;
-    height: calc(100% - 86px);
-    position: relative;
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      background-color: #f5f5f5;
-    }
-
-    &::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-      background-color: #f5f5f5;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: #f90;
-      background-image: -webkit-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.2) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0.2) 75%,
-        transparent 75%,
-        transparent
-      );
-    }
-
-    .table {
-      white-space: nowrap;
+    height: calc(100% - 100px);
+    .table-customer {
+      display: block;
+      width: 100%;
       border-collapse: collapse;
 
       tr {
-        border-bottom: 1px solid #cacaca;
+        cursor: pointer;
+        transition: all 0.3s;
       }
 
-      thead {
-        tr {
-          th {
-            position: sticky;
-            top: 0;
-            z-index: 3;
-          }
-        }
-      }
-      thead,
-      tbody {
-        tr {
-          th {
-            text-align: left;
-          }
-        }
+      tr:hover {
+        background-color: $color-extra-light-gray;
       }
 
       th,
       td {
-        font-size: 12px;
-        padding: 10px;
-        background-color: white;
+        text-align: left;
+        padding: 15px 0;
       }
 
-      tbody {
-        tr {
-          td.col-customer-option {
-            position: sticky;
-            top: 0;
-            right: 0;
-          }
+      .border-bottom {
+        th,
+        td {
+          border-bottom: 1px solid $color-light-gray;
         }
       }
 
-      .col {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &-customer-code {
-          min-width: 200px;
-          padding-right: 20px;
-          position: sticky;
-          top: 0;
-          left: 0;
-          z-index: 3;
-
-          &-custom {
-            z-index: 4;
-          }
-        }
-
-        &-customer-name {
-          min-width: 200px;
-        }
-
-        &-customer-gender {
-          min-width: 250px;
-        }
-
-        &-customer-date-of-birth {
-          min-width: 300px;
-        }
-
-        &-customer-group {
-          min-width: 400px;
-        }
-
-        &-customer-phone {
-          min-width: 200px;
-        }
-
-        &-customer-email {
-          min-width: 250px;
-        }
-
-        &-customer-address {
-          min-width: 300px;
-        }
-
-        &-customer-money {
-          min-width: 300px;
-        }
-        &-customer-member-code {
-          min-width: 200px;
-        }
-
-        &-customer-option {
-          display: flex;
-          min-width: 200px;
-          position: sticky;
-          border-left: 1px solid #e9ebee;
-          right: 0;
-          top: 0px;
-
-          &-custom {
-            .btn-option-ctn {
-              border-radius: 4px;
-              display: inline-block;
-              font-size: 13px;
-              font-weight: normal;
-              text-align: center;
-              transition: all 0.3s ease;
-
-              .btn-style-common {
-                padding: 10px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: all 0.5s;
-              }
-            }
-
-            .btn-update {
-              background-color: #0075ff;
-              color: #fff;
-              margin-right: 10px;
-
-              &:hover {
-                background-color: #004faa;
-              }
-            }
-
-            .btn-delete {
-              background-color: #f65454;
-              color: #fff;
-
-              &:hover {
-                background-color: #f30909;
-              }
-            }
-          }
-        }
+      .input-ctn {
+        min-width: 50px;
       }
+
+      .number {
+        min-width: 40px;
+      }
+
+      .customer-code {
+        min-width: 150px;
+      }
+
+      .fullname {
+        min-width: 150px;
+      }
+
+      .gender {
+        min-width: 100px;
+      }
+
+      .date-of-birth {
+        min-width: 150px;
+      }
+
+      .customer-group {
+        min-width: 200px;
+      }
+
+      .phone-number {
+        min-width: 200px;
+      }
+
+      .email {
+        min-width: 250px;
+      }
+
+      .address {
+        min-width: 250px;
+      }
+
+      .money-debt {
+        min-width: 150px;
+      }
+
+      .customer-card-code {
+        min-width: 150px;
+      }
+
+    }
+
+    &::-webkit-scrollbar-track
+    {
+      -webkit-box-shadow: inset 0 0 6px $color-extra-light-gray;
+      background-color: $color-light-gray;
+    }
+
+    &::-webkit-scrollbar
+    {
+      width: 10px;
+      height: 10px;
+      background-color: $color-extra-light-gray;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+      background-color: $color-gray;
     }
   }
 }
@@ -379,4 +312,92 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+// checkbox
+body {
+    font-family: Avenir;
+    font-size: 16px;
+}
+
+.label-cbx {
+    user-select: none;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.label-cbx input:checked + .checkbox {
+    border-color: #20C2E0;
+}
+
+.label-cbx input:checked + .checkbox svg path {
+    fill: #20C2E0;
+}
+
+.label-cbx input:checked + .checkbox svg polyline {
+    stroke-dashoffset: 0;
+}
+
+.label-cbx:hover .checkbox svg path {
+    stroke-dashoffset: 0;
+}
+
+.label-cbx .checkbox {
+    position: relative;
+    top: 2px;
+    float: left;
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #C8CCD4;
+    border-radius: 3px;
+}
+
+.label-cbx .checkbox svg {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+}
+
+.label-cbx .checkbox svg path {
+    fill: none;
+    stroke: #20C2E0;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 71px;
+    stroke-dashoffset: 71px;
+    transition: all .6s ease;
+}
+
+.label-cbx .checkbox svg polyline {
+    fill: none;
+    stroke: #FFF;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 18px;
+    stroke-dashoffset: 18px;
+    transition: all .3s ease;
+}
+
+.label-cbx > span {
+    pointer-events: none;
+    vertical-align: middle;
+}
+
+.cntr {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.invisible {
+    position: absolute;
+    z-index: -1;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
 </style>

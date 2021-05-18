@@ -12,7 +12,10 @@ export default {
 
 <style lang="scss" scoped>
 .btn-reload {
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
   border: 1px solid #cacaca;
   border-radius: 4px;
   transition: 0.5s;
@@ -26,8 +29,13 @@ export default {
       height: 20px;
   }
   &:hover {
-    background-color: #1abc9c;
-    border-color: #1abc9c;
+    background-color: $color-blue;
+    border-color: $color-blue;
+  }
+
+  &:active {
+    background-color: $color-light-blue;
+    border-color: $color-light-blue;
   }
 }
 

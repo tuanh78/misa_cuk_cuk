@@ -1,10 +1,9 @@
 <template>
-  <div class="search">
     <div class="search-input">
       <div class="icon-search"></div>
-      <input type="text" :placeholder="searchDetail">
+      <input class="input-detail" type="text" :placeholder="searchDetail" onfocus="this.placeholder = ''" :onblur="'this.placeholder = ' + '\'' +searchDetail + '\''"/>
+      <div class="icon-remove-text"></div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -21,28 +20,77 @@ export default {
 <style lang="scss" scoped>
 .search-input {
   display: flex;
-  border: 1px solid #cacaca;
-  border-radius: 5px;
-  padding: 10px;
+  align-items: center;
+  position: relative;
+
   .icon-search {
     background-image: url('../../assets/icon/search.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    width: 15px;
-    height: 15px;
-    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
   }
 
-  input {
-    border: none;
+  .input-detail {
+    color: $color-black;
+    border: 1px solid $color-gray;
     outline: none;
-    font-family: 'Google Sans Italic';
-    font-size: 12px;
+    border-radius: 4px;
+    height: 40px;
+    width: 213px;
+    padding-left: 40px;
+    transition: all 0.5s;
+    font-size: $font-size-label-field-input;
 
-    &::placeholder {
-      color: #bbbbbb;
+    &:focus {
+      border-color: $color-green-default;
     }
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      font-size: 10px;
+      color: $color-gray;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      font-size: 12px;
+      color: $color-gray;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      font-size: 12px;
+      color: $color-gray;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      font-size: 12px;
+      color: $color-gray;
+    }
+  }
+
+  .icon-remove-text {
+    background-image: url('../../assets/icon/x.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: $color-extra-light-gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: $color-gray;
+    }
+  }
+
+  .error {
+    border-color: $color-error !important;
   }
 }
 </style>

@@ -1,19 +1,27 @@
 <template>
   <div class="header-ctn">
     <div class="header__left">
-      <div class="btn-menu"></div>
+      <div class="btn-menu">
+        <div class="btn-menu-icon"></div>
+      </div>
       <div class="logo"></div>
     </div>
     <div class="header__right">
       <div class="heading">
         <span>Nhà hàng <span>biển đông</span></span>
-        <font-awesome-icon icon="angle-down" />
+        <font-awesome-icon class="angle-down-custom" icon="angle-down" />
       </div>
 
       <div class="user">
-        <div class="user__avt"></div>
-        <div class="user__name">Nguyễn Văn Mạnh</div>
-        <div class="user__icon"></div>
+        <div class="user__avt">
+          <div class="user__avt-img"></div>
+        </div>
+        <div class="user__name">
+          <div class="user__name-detail">Nguyễn Văn Mạnh</div>
+        </div>
+        <div class="user__icon">
+          <div class="user__icon-img"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -37,18 +45,18 @@ export default {
   &__left {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 12px 0;
-    width: 16%;
-    border-right: 2px solid #E9EBEE;
+    width: 226px;
+    border-right: 1px solid $color-extra-light-gray;
     .btn-menu {
-      background-image: url('../../assets/img/toggle.png');
-      background-size: contain;
-      background-position: left;
-      background-repeat: no-repeat;
-      width: calc(20% - 16px );
-      height: 25px;
-      margin-right: 10px;
+      padding: 12px 10px 12px 16px;
+      &-icon {
+        background-image: url('../../assets/img/toggle.png');
+        background-size: cover;
+        background-position: left;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+      }
     }
 
     .logo {
@@ -57,7 +65,7 @@ export default {
       background-position: left;
       background-repeat: no-repeat;
       width: calc(70% - 16px);
-      height: 100%;
+      height: 24px;
     }
   }
 
@@ -65,16 +73,24 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 16px;
-    width: 84%;
-    border-bottom: 2px solid #E9EBEE;
+    width: calc(100% - 226px);
+    border-bottom: 1px solid $color-extra-light-gray;
 
     .heading {
-      span {
-        margin-right: 10px;
+      font-family: "Google Sans Bold", sans-serif;
+      font-size: $font-size-title2;
+      display: flex;
+      align-items: center;
+      & > span {
+        padding: 0px 10px 0px 16px;
         span {
           text-transform: capitalize;
         }
+      }
+
+      .angle-down-custom {
+        width: 16px;
+        height: 16px;
       }
     }
 
@@ -83,26 +99,31 @@ export default {
       align-items: center;
 
       &__avt {
-        background-image: url('../../assets/icon/avatar-default.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 40px;
-        height: 40px;
-        margin-right: 16px;
+        padding: 0 16px;
+        &-img {
+          background-image: url('../../assets/icon/avatar-default.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 30px;
+          height: 30px;
+        }
       }
 
       &__name {
-        margin-right: 16px;
+        padding-right: 16px;
       }
 
       &__icon {
-        background-image: url('../../assets/icon/option.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 30px;
-        height: 30px;
+        padding-right: 16px;
+        &-img {
+          background-image: url('../../assets/icon/option.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          width: 16px;
+          height: 16px;
+        }
       }
     }
   }
