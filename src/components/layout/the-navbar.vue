@@ -57,6 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/_variables.scss';
 .nav {
   width: 226px;
   height: calc(100vh - 48px);

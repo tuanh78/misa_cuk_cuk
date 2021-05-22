@@ -80,4 +80,6 @@ a {
   src: url('./assets/font/GoogleSans-Italic.otf');
 }
 
+@import './scss/_variables.scss'
+
 </style>

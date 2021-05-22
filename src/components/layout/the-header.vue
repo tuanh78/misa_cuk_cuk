@@ -37,6 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/_variables.scss';
 .header {
   &-ctn {
     display: flex;

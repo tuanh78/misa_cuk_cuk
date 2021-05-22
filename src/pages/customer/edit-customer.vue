@@ -181,6 +181,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/_variables.scss';
 .customer-ctn {
   position: relative;
   z-index: 6;

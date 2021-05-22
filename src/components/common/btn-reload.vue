@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/_variables.scss';
 .btn-reload {
   display: flex;
   align-items: center;
