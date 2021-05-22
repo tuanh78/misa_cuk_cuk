@@ -16,7 +16,7 @@
 <script>
 import TheNavbar from './components/layout/the-navbar.vue'
 import TheHeader from './components/layout/the-header.vue'
-import TheNavigation from './components/layout/the-navigation.vue'
+import TheNavigation from './components/layout/navigation/the-navigation.vue'
 export default {
   components: {
     TheNavbar,

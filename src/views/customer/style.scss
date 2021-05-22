@@ -1,0 +1,246 @@
+.customer {
+    height: calc(100vh - 104px);
+    padding: 12px 12px 0px 12px;
+  
+    .heading {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      &-detail {
+        font-family: $font-family-title;
+        font-size: $font-size-title;
+      }
+      .icon-add {
+        background-image: url("../../assets/icon/add.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+    }
+  
+    .tools {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  
+    .main-content-ctn {
+      height: calc(100% - 100px);
+      position: relative;
+      .main-content {
+        overflow: auto;
+        height: 100%;
+        position: relative;
+        .table-customer {
+          display: block;
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+  
+          thead {
+            tr {
+              th {
+                position: sticky;
+                top: 0;
+                background-color: $color-white;
+                z-index: 2;
+              }
+            }
+          }
+  
+          tr {
+            cursor: pointer;
+            transition: all 0.3s;
+          }
+  
+          tr:hover {
+            background-color: $color-extra-light-gray;
+          }
+  
+          th,
+          td {
+            text-align: left;
+            padding: 15px 0;
+          }
+  
+          .border-bottom {
+            th,
+            td {
+              border-bottom: 1px solid $color-light-gray;
+            }
+          }
+  
+          .input-ctn {
+            min-width: 50px;
+          }
+  
+          .number {
+            min-width: 40px;
+          }
+  
+          .customer-code {
+            min-width: 150px;
+          }
+  
+          .fullname {
+            min-width: 150px;
+          }
+  
+          .gender {
+            min-width: 100px;
+          }
+  
+          .date-of-birth {
+            min-width: 150px;
+          }
+  
+          .customer-group {
+            min-width: 200px;
+          }
+  
+          .phone-number {
+            min-width: 200px;
+          }
+  
+          .email {
+            min-width: 250px;
+          }
+  
+          .address {
+            min-width: 250px;
+          }
+  
+          .money-debt {
+            min-width: 150px;
+          }
+  
+          .customer-card-code {
+            min-width: 150px;
+          }
+  
+        }
+  
+        &::-webkit-scrollbar-track
+        {
+          -webkit-box-shadow: inset 0 0 6px $color-extra-light-gray;
+          background-color: $color-light-gray;
+        }
+  
+        &::-webkit-scrollbar
+        {
+          width: 10px;
+          height: 10px;
+          background-color: $color-extra-light-gray;
+        }
+  
+        &::-webkit-scrollbar-thumb
+        {
+          background-color: $color-gray;
+        }
+      }
+    }
+  }
+  
+  // checkbox
+  body {
+      font-family: Avenir;
+      font-size: 16px;
+  }
+  
+  .label-cbx {
+      user-select: none;
+      cursor: pointer;
+      margin-bottom: 0;
+  }
+  
+  .label-cbx input:checked + .checkbox {
+      border-color: #20C2E0;
+  }
+  
+  .label-cbx input:checked + .checkbox svg path {
+      fill: #20C2E0;
+  }
+  
+  .label-cbx input:checked + .checkbox svg polyline {
+      stroke-dashoffset: 0;
+  }
+  
+  .label-cbx:hover .checkbox svg path {
+      stroke-dashoffset: 0;
+  }
+  
+  .label-cbx .checkbox {
+      position: relative;
+      top: 2px;
+      float: left;
+      margin-right: 8px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #C8CCD4;
+      border-radius: 3px;
+  }
+  
+  .label-cbx .checkbox svg {
+      position: absolute;
+      top: -2px;
+      left: -2px;
+  }
+  
+  .label-cbx .checkbox svg path {
+      fill: none;
+      stroke: #20C2E0;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 71px;
+      stroke-dashoffset: 71px;
+      transition: all .6s ease;
+  }
+  
+  .label-cbx .checkbox svg polyline {
+      fill: none;
+      stroke: #FFF;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 18px;
+      stroke-dashoffset: 18px;
+      transition: all .3s ease;
+  }
+  
+  .label-cbx > span {
+      pointer-events: none;
+      vertical-align: middle;
+  }
+  
+  .cntr {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+  }
+  
+  .invisible {
+      position: absolute;
+      z-index: -1;
+      width: 0;
+      height: 0;
+      opacity: 0;
+  }
+  
+  .reload-ctn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-image: url('../../assets/icon/Spinner.gif');
+    background-size: cover;
+    scroll-behavior: initial;
+    z-index: 2;
+  }
+  
