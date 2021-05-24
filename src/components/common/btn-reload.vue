@@ -30,13 +30,13 @@ export default {
       height: 20px;
   }
   &:hover {
-    background-color: $color-blue;
-    border-color: $color-blue;
+    background-color: #e84393;
+    border-color: #e84393;
   }
 
   &:active {
-    background-color: $color-light-blue;
-    border-color: $color-light-blue;
+    background-color: #fd79a8;
+    border-color: #fd79a8;
   }
 }
 

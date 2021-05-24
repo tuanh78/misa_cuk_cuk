@@ -15,7 +15,6 @@
     .add-title {
       text-transform: uppercase;
       font-family: "Google Sans Bold";
-      font-size: $font-size-title;
       padding: 20px 20px 15px 20px;
     }
   }
@@ -59,7 +58,6 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        position: relative;
   
         input {
           width: 90%;
@@ -85,7 +83,6 @@
   }
   
   .input-style-common {
-    position: relative;
     label {
       font-size: 13px;
       margin-bottom: 5px;
@@ -95,8 +92,7 @@
     }
     input {
       border: 1px solid #cacaca;
-      padding: 0 20px 0 16px;
-      height: 40px;
+      padding: 10px;
       outline: none;
       border-radius: 4px
     }
@@ -243,163 +239,4 @@
       background-color: #cacaca;
     }
   }
-
-  // select box customer group
-  .custom-select-wrapper {
-    position: relative;
-    user-select: none;
-    width: 90%;
-}
-.custom-select {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-.custom-select__trigger {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px 0 16px;
-    color: #3b3b3b;
-    height: 40px;
-    line-height: 40px;
-    background: #ffffff;
-    cursor: pointer;
-    border: 1px solid $color-gray;
-    border-radius: 4px;
-    transition: all 0.5s;
-
-    .select-box-customer-group {
-      border: none;
-      height: 90%;
-      padding: 0;
-
-      &:focus {
-        border: none;
-      }
-    }
-}
-.custom-options {
-    position: absolute;
-    display: block;
-    top: 100%;
-    left: 0;
-    right: 0;
-    border-top: 0;
-    background: #fff;
-    transition: all 0.5s;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    z-index: 2;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-.custom-select.open .custom-options {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-}
-.custom-option {
-    position: relative;
-    display: flex;
-    line-height: 40px;
-    cursor: pointer;
-    transition: all 0.5s;
-    padding-left: 32px;
-}
-.custom-option:hover {
-    cursor: pointer;
-    background-color: $color-extra-light-gray;
-}
-.custom-option.selected {
-    color: #ffffff;
-    background-color: $color-green-default;
-    position: relative;
-
-    &:before {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 7px;
-      left: 12px;
-      transform: rotate(45deg);
-      height: 15px;
-      width: 7px;
-      border-bottom: 3px solid #fff;
-      border-right: 3px solid #fff;
-    }
-}
-// arrow select box
-.arrow {
-  position: relative;
-  height: 20px;
-  width: 20px;
-  z-index: 99;
-}
-.arrow::before, .arrow::after {
-  content: "";
-  position: absolute;
-  top: calc(50% - 4px);
-  width: 0.1rem;
-  height: 10px;
-  transition: all 0.5s;
-}
-.arrow::before {
-  left: 9px;
-  transform: rotate(45deg);
-  background-color: #394a6d;
-}
-.arrow::after {
-  left: 16px;
-  transform: rotate(-45deg);
-  background-color: #394a6d;
-}
-
-.open .arrow::before {
-  transform: rotate(-45deg);
-}
-.open .arrow::after {
-  transform: rotate(45deg);
-}
-
-.change-border-radius {
-  border-radius: 4px 4px 0 0;
-  border-color: $color-green-default;
-}
-.check-ctn {
-  padding: 0 10px;
-}
-.check {
-  display: inline-block;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
-  border-bottom: 3px solid #fff;
-  border-right: 3px solid #fff;
-}
-
-.icon-remove-text {
-  background-image: url('../../../assets/icon/x.svg');
-  background-repeat: no-repeat;
-  background-size: contain;                      
-  background-position: center;
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  top: 52%;
-  right: 32px;
-  background-color: $color-extra-light-gray;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.5s;
-
-  &:hover {
-    background-color: $color-gray;
-  }
-}
-
-.icon-remove-custom {
-  right: 4px;
-}
+  

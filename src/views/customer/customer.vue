@@ -8,8 +8,8 @@
       </btn-add>
     </div>
     <div class="tools">
-      <input-search searchPlaceHolder="Tìm kiếm theo mã, tên KH"></input-search>
-      <btn-reload @click.native="ShowReloadPage"></btn-reload>
+      <input-search @updateSearch="SearchCustomers" searchPlaceHolder="Tìm kiếm theo mã, tên KH"></input-search>
+      <btn-reload @click.native="ReloadPage"></btn-reload>
     </div>
     <div class="main-content-ctn">
       <div v-if="isShowReload" class="reload-ctn"></div>
@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="border-bottom" v-for="(customer, index) in customers" :key="index">
+            <tr @click="ShowFormEdit(customer)" class="border-bottom" v-for="(customer, index) in customers" :key="index">
               <th class="input-icon-ctn input-ctn">
                 <div class="cntr title-border-bottom">
                   <label :for="customer.CustomerId" class="label-cbx">
@@ -82,6 +82,7 @@
         </table>
       </div>
     </div>
+    <the-navigation :pageSize="pageSize" :pageIndex="currentPageIndex" :recordStart="customerStart" :recordEnd="customerEnd" :totalRecord="totalCustomers" @loadPage="GetCustomersPageIndex" @loadFirstPage="GetCustomersFirstPage" @loadLastPage="GetCustomersLastPage" @loadPrevPage="GetCustomersPrevPage" @loadNextPage="GetCustomersNextPage"></the-navigation>
     <add-customer
       key="add"
       :isShow="isShowAddCustomer"
@@ -103,9 +104,11 @@ import BtnAdd from '../../components/common/btn-add.vue'
 import BtnReload from '../../components/common/btn-reload.vue'
 import InputSearch from '../../components/common/input-search/input-search.vue'
 import AddCustomer from '../../pages/customer/add-customer/add-customer.vue'
-import EditCustomer from '../../pages/customer/edit-customer.vue'
+import EditCustomer from '../../pages/customer/edit-customer/edit-customer.vue'
 import PopupDeleteCustomer from '../../pages/customer/warning-popup-delete-customer'
+import TheNavigation from '../../components/layout/navigation/the-navigation'
 import axios from 'axios'
+import { ConstantValue } from '../../constant/common'
 export default {
   data () {
     return {
@@ -113,12 +116,27 @@ export default {
       isShowAddCustomer: false,
       isShowEditCustomer: false,
       isShowPopupDeleteCustomer: false,
-      isShowReload: true
+      isShowReload: true,
+      customerEdit: {},
+      totalCustomers: 0,
+      totalPage: 0,
+      currentPageIndex: 1,
+      pageSize: ConstantValue.Page_Size_Customer,
+      customerStart: 1,
+      customerEnd: 1
     }
   },
   created: async function () {
-    const res = await axios.get('https://localhost:44389/api/v1/Customers')
+    const res = await axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=1&pageSize=${this.pageSize}`)
+    const resTotalCustomer = await axios.get('https://localhost:44389/api/v1/Customers/total-record')
     this.customers = res.data
+    this.totalCustomers = resTotalCustomer.data
+    this.totalPage = Math.ceil(this.totalCustomers * 1.0 / this.pageSize)
+    this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+    this.customerEnd = this.customerStart + this.pageSize - 1
+    if (this.customerEnd > this.totalCustomers) {
+      this.customerEnd = this.totalCustomers
+    }
     this.isShowReload = false
   },
   components: {
@@ -127,7 +145,8 @@ export default {
     InputSearch,
     AddCustomer,
     EditCustomer,
-    PopupDeleteCustomer
+    PopupDeleteCustomer,
+    TheNavigation
   },
   methods: {
     HiddenFormAddCustomer () {
@@ -140,17 +159,125 @@ export default {
       this.isShowPopupDeleteCustomer = false
     },
     LoadData () {
-      axios.get('https://localhost:44389/api/v1/Customers')
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=${this.currentPageIndex}&pageSize=${this.pageSize}`)
         .then((res) => {
           this.customers = res.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
           this.isShowReload = false
         }).catch((err) => {
           console.log(err)
         })
     },
-    ShowReloadPage () {
+    ShowFormEdit (customer) {
+      this.customer = customer
+      this.isShowEditCustomer = true
+    },
+    ReloadPage () {
       this.isShowReload = true
       this.LoadData()
+    },
+    SearchCustomers (value) {
+      this.isShowReload = true
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=1&pageSize=${this.pageSize}&filter=${value}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    GetCustomersPageIndex (pageIndex) {
+      this.isShowReload = true
+      this.currentPageIndex = pageIndex
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=${pageIndex}&pageSize=${this.pageSize}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    GetCustomersFirstPage () {
+      this.isShowReload = true
+      this.currentPageIndex = 1
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=1&pageSize=${this.pageSize}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    GetCustomersLastPage () {
+      this.isShowReload = true
+      this.currentPageIndex = this.totalPage
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=${this.totalPage}&pageSize=${this.pageSize}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    GetCustomersPrevPage () {
+      this.isShowReload = true
+      if (this.currentPageIndex > 1) {
+        --this.currentPageIndex
+      }
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=${this.currentPageIndex}&pageSize=${this.pageSize}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    GetCustomersNextPage () {
+      this.isShowReload = true
+      if (this.currentPageIndex < this.totalPage) {
+        ++this.currentPageIndex
+      }
+      axios.get(`https://localhost:44389/api/v1/Customers/paging?pageIndex=${this.currentPageIndex}&pageSize=${this.pageSize}`)
+        .then((result) => {
+          this.customers = result.data
+          this.customerStart = (this.currentPageIndex - 1) * this.pageSize + 1
+          this.customerEnd = this.customerStart + this.pageSize - 1
+          if (this.customerEnd > this.totalCustomers) {
+            this.customerEnd = this.totalCustomers
+          }
+          this.isShowReload = false
+        }).catch((err) => {
+          console.log(err)
+        })
     }
   }
 }

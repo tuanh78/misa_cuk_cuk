@@ -33,7 +33,8 @@
                     v-model="customer.customerCode"
                     ref="code"
                     type="text"
-                    class="invalid-value"
+                    class="customer-code"
+                    @keypress="[RemoveInvalid('customer-code'), errors.customerCode = false]"
                   />
                   <transition
                     enter-active-class="animate__animated animate__fadeIn"
@@ -45,10 +46,11 @@
                       @click="customer.customerCode = ''"
                     ></div>
                   </transition>
+                  <tooltip :isShow="errors.customerCode" title="Mã khách hàng" description="Không được để trống"></tooltip>
                 </div>
                 <div class="input-item input-style-common">
                   <label>Họ và tên (<span>*</span>)</label>
-                  <input v-model="customer.fullName" type="text" />
+                  <input v-model="customer.fullName" type="text" class="fullname" @keypress="[RemoveInvalid('fullname'), errors.fullName = false]"/>
                   <transition
                     enter-active-class="animate__animated animate__fadeIn"
                     leave-active-class="animate__animated animate__fadeOut"
@@ -59,6 +61,7 @@
                       @click="customer.fullName = ''"
                     ></div>
                   </transition>
+                  <tooltip :isShow="errors.fullName" title="Tên khách hàng" description="Không được để trống"></tooltip>
                 </div>
                 <div class="input-item input-style-common">
                   <label>Mã thẻ thành viên</label>
@@ -76,23 +79,11 @@
                 </div>
                 <div class="input-item input-style-common">
                   <label>Nhóm khách hàng</label>
-                  <div class="custom-select-wrapper" @click="ShowCustomSelect">
-                    <div class="custom-select">
-                      <div class="custom-select__trigger">
-                        <span>{{ customerGroups[0].customerGroupName}}</span>
-                        <div class="arrow"></div>
-                      </div>
-                      <div class="custom-options">
-                        <span v-for="(customerGroup, index) in customerGroups" :key="index" @click="SelectOption(customerGroup.customerGroupId)" :class="['custom-option', {'selected': index == 0}]" :data-value="customerGroup.customerGroupId"
-                          >{{customerGroup.customerGroupName}}</span
-                        >
-                      </div>
-                    </div>
-                  </div>
+                  <filter-option @updateValue="UpdateCustomerGroup" :optionValues="customerGroups"></filter-option>
                 </div>
                 <div class="input-item input-style-common">
                   <label>Ngày sinh</label>
-                  <input v-model="customer.dateOfBirth" type="text" />
+                  <v-datepicker @updateDate="UpdateDateOfBirth"></v-datepicker>
                 </div>
                 <div class="input-item input-style-common input-gender">
                   <label class="gender-title">Giới tính</label>
@@ -163,7 +154,7 @@
                 </div>
                 <div class="input-style-common input-style-info">
                   <label>Số điện thoại (<span>*</span>)</label>
-                  <input v-model="customer.phoneNumber" type="text" />
+                  <input v-model="customer.phoneNumber" type="text" @keypress="[RemoveInvalid('phone-number'), errors.phoneNumber = false]" class="phone-number" />
                   <transition
                     enter-active-class="animate__animated animate__fadeIn"
                     leave-active-class="animate__animated animate__fadeOut"
@@ -174,6 +165,7 @@
                       @click="customer.phoneNumber = ''"
                     ></div>
                   </transition>
+                  <tooltip :isShow="errors.phoneNumber" title="Số điện thoại" description="Không được để trống"></tooltip>
                 </div>
               </div>
 
@@ -225,29 +217,34 @@
           </div>
 
           <div class="btn">
-            <div class="btn-delete" @click="isShowPopup = true">Hủy</div>
+            <div class="btn-delete" @click="HiddenPopupAndForm">Hủy</div>
 
-            <div class="btn-save">
+            <div class="btn-save" @click="AddCustomer">
               <div class="icon-save"></div>
               Lưu
             </div>
           </div>
-          <div class="btn-close" @click="isShowPopup = true"></div>
+          <div class="btn-close" @click="CloseFormAdd"></div>
         </div>
         <warning-add-customer
           :isShow="isShowPopup"
           :HiddenPopup="HiddenPopup"
           :HiddenPopupAndForm="HiddenPopupAndForm"
         ></warning-add-customer>
-        <div class="mask"></div>
+        <div class="mask" @click="CloseFormAdd"></div>
       </div>
     </transition>
+    <success-notification></success-notification>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import WarningAddCustomer from '../warning-popup-add-customer.vue'
+import VDatepicker from '../../../components/common/datepicker/v-datepicker'
+import FilterOption from '../../../components/common/filter-option/filter-option.vue'
+import SuccessNotification from '../../../components/common/success-notification/success-notification'
+import Tooltip from '../../../components/common/tooltip/tooltip.vue'
 
 export default {
   data () {
@@ -265,18 +262,27 @@ export default {
         memberCardCode: '',
         customerGroupId: '',
         dateOfBirth: '',
-        gender: 0,
+        gender: '',
         email: '',
         phoneNumber: '',
         companyName: '',
         companyTaxCode: '',
         address: ''
       },
-      customerGroups: []
+      customerGroups: [],
+      errors: {
+        customerCode: false,
+        phoneNumber: false,
+        fullName: false
+      }
     }
   },
   components: {
-    WarningAddCustomer
+    WarningAddCustomer,
+    VDatepicker,
+    FilterOption,
+    SuccessNotification,
+    Tooltip
   },
   props: {
     isShow: {
@@ -291,8 +297,12 @@ export default {
     axios
       .get('https://localhost:44389/api/v1/CustomerGroup')
       .then((res) => {
-        this.customerGroups = res.data
-        this.customer.customerGroupId = this.customerGroups[0].customerGroupId
+        this.customerGroups = res.data.map(function (value, index) {
+          return {
+            label: value.customerGroupName,
+            value: value.customerGroupId
+          }
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -304,6 +314,19 @@ export default {
     },
     HiddenPopupAndForm () {
       this.HiddenForm()
+      this.customer = {
+        customerCode: '',
+        fullName: '',
+        memberCardCode: '',
+        customerGroupId: '',
+        dateOfBirth: '',
+        gender: '',
+        email: '',
+        phoneNumber: '',
+        companyName: '',
+        companyTaxCode: '',
+        address: ''
+      }
       this.isShowPopup = false
     },
     dragMouseDown: function (event) {
@@ -334,39 +357,81 @@ export default {
       document.onmouseup = null
       document.onmousemove = null
     },
-    ShowCustomSelect () {
-      this.$el.querySelector('.custom-select').classList.toggle('open')
-      this.$el
-        .querySelector('.custom-select__trigger')
-        .classList.toggle('change-border-radius')
-      for (const option of this.$el.querySelectorAll('.custom-option')) {
-        option.addEventListener('click', function () {
-          if (!this.classList.contains('selected')) {
-            this.parentNode
-              .querySelector('.custom-option.selected')
-              .classList.remove('selected')
-            this.classList.add('selected')
-            this.closest('.custom-select').querySelector(
-              '.custom-select__trigger span'
-            ).textContent = this.textContent
-            // const checkString = '<div class="check-ctn"><div class="check"></div></div>'
-          }
-        })
-      }
-      const me = this
-      window.addEventListener('click', function (e) {
-        const select = me.$el.querySelector('.custom-select')
-        if (!select.contains(e.target)) {
-          select.classList.remove('open')
-          me.$el
-            .querySelector('.custom-select__trigger')
-            .classList.remove('change-border-radius')
-        }
-      })
-    },
 
     SelectOption (customerGroupId) {
       this.customer.customerGroupId = customerGroupId
+    },
+    UpdateDateOfBirth (date) {
+      this.customer.dateOfBirth = date
+    },
+    AddCustomer () {
+      for (const key in this.customer) {
+        if (key === 'customerCode' && this.customer[key] === '') {
+          this.$el.querySelector('.customer-code').classList.add('invalid-value')
+          this.errors.customerCode = true
+          return
+        }
+        if (key === 'fullName' && this.customer[key] === '') {
+          this.$el.querySelector('.fullname').classList.add('invalid-value')
+          this.errors.fullName = true
+          return
+        }
+        if (key === 'phoneNumber' && this.customer[key] === '') {
+          this.$el.querySelector('.phone-number').classList.add('invalid-value')
+          this.errors.phoneNumber = true
+          return
+        }
+      }
+      axios.post('https://localhost:44389/api/v1/Customers', this.customer)
+        .then((result) => {
+          if (result.status === 201) {
+            this.$notify({ group: 'success', text: 'Thêm khách hàng thành công !' })
+            this.customer = {
+              customerCode: '',
+              fullName: '',
+              memberCardCode: '',
+              customerGroupId: '',
+              dateOfBirth: '',
+              gender: '',
+              email: '',
+              phoneNumber: '',
+              companyName: '',
+              companyTaxCode: '',
+              address: ''
+            }
+            this.HiddenForm()
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
+    },
+    UpdateCustomerGroup (value) {
+      this.customer.customerGroupId = value
+    },
+    CloseFormAdd () {
+      for (const key in this.customer) {
+        if (this.customer[key]) {
+          this.isShowPopup = true
+          return
+        }
+      }
+      this.HiddenForm()
+      this.customer = {
+        customerCode: '',
+        fullName: '',
+        memberCardCode: '',
+        customerGroupId: '',
+        dateOfBirth: '',
+        gender: '',
+        email: '',
+        phoneNumber: '',
+        companyName: '',
+        companyTaxCode: '',
+        address: ''
+      }
+    },
+    RemoveInvalid (className) {
+      this.$el.querySelector(`.${className}`).classList.remove('invalid-value')
     }
   },
   watch: {
@@ -382,6 +447,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../scss/_variables.scss';
+@import "../../../scss/_variables.scss";
 @import "./style";
 </style>

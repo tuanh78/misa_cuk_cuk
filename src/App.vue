@@ -6,7 +6,6 @@
       <div class="content-detail">
         <div>
           <router-view></router-view>
-          <the-navigation></the-navigation>
         </div>
       </div>
     </div>
@@ -16,25 +15,25 @@
 <script>
 import TheNavbar from './components/layout/the-navbar.vue'
 import TheHeader from './components/layout/the-header.vue'
-import TheNavigation from './components/layout/navigation/the-navigation.vue'
 export default {
   components: {
     TheNavbar,
-    TheHeader,
-    TheNavigation
+    TheHeader
   }
 }
 </script>
 <style lang="scss">
+@import './scss/_variables.scss';
+
 * {
-  margin: 0;
+  margin: 0 ;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 body {
-  font-family: 'Google Sans', sans-serif;
-  font-size: 13px;
+  font-family: 'Google Sans', sans-serif !important;
+  font-size: 13px !important;
 }
 
 ul {
@@ -80,6 +79,40 @@ a {
   src: url('./assets/font/GoogleSans-Italic.otf');
 }
 
-@import './scss/_variables.scss'
+.q-field__control {
+  height: 40px !important;
+}
 
+.q-field__marginal {
+  height: 40px;
+}
+
+.custom-datepicker {
+  padding: 0 16px;
+}
+.custom-datepicker:focus-visible {
+  border-color: $color-green-default !important;
+}
+
+.vdpClearInput {
+  right: 25px !important;
+}
+
+.q-field--filled .q-field__control, .q-field--filled .q-field__control:before {
+  background-color: $color-white !important;
+}
+
+.q-field__control {
+  border: 1px solid #BBBBBB;
+  border-radius: 4px;
+  padding-left: 16px
+}
+
+.q-field__native {
+  padding-left: 16px !important;
+}
+
+.q-btn-item {
+  margin-right: 10px;
+}
 </style>

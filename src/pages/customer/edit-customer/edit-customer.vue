@@ -36,7 +36,7 @@
                 </div>
                 <div class="input-item input-style-common">
                   <label>Ngày sinh</label>
-                  <input type="text" />
+                  <v-datepicker></v-datepicker>
                 </div>
                 <div class="input-item input-style-common input-gender">
                   <label class="gender-title">Giới tính</label>
@@ -111,7 +111,8 @@
 </template>
 
 <script>
-import WarningEditCustomer from './warning-popup-edit-customer.vue'
+import VDatepicker from '../../../components/common/datepicker/v-datepicker.vue'
+import WarningEditCustomer from '../warning-popup-edit-customer.vue'
 
 export default {
   data () {
@@ -126,7 +127,8 @@ export default {
     }
   },
   components: {
-    WarningEditCustomer
+    WarningEditCustomer,
+    VDatepicker
   },
   props: {
     isShow: {
@@ -135,6 +137,9 @@ export default {
     },
     HiddenForm: {
       type: Function
+    },
+    customer: {
+      type: Object
     }
   },
   methods: {
@@ -181,247 +186,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../scss/_variables.scss';
-.customer-ctn {
-  position: relative;
-  z-index: 6;
-}
-.add-customer {
-  position: fixed;
-  width: 800px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  border-radius: 5px;
-  z-index: 6;
-
-  .add-title {
-    text-transform: uppercase;
-    font-family: "Google Sans Bold";
-    padding: 20px 20px 15px 20px;
-  }
-}
-
-.input-group {
-  padding: 0 20px;
-  &-common {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  .avatar {
-     width: 200px;
-     margin-right: 30px;
-    .img-avt {
-      background-image: url('../../assets/img/default-avatar.jpg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      display: block;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      border: 1px solid #bbbbbb;
-      margin-right: 20px;
-    }
-
-    &-detail {
-      font-size: 13px;
-      text-align: center;
-      span {
-        font-family: 'Google Sans Bold';
-      }
-    }
-  }
-
-  .user-info-comon {
-    display: flex;
-    flex-wrap: wrap;
-
-    .input-item {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-
-      input {
-        width: 90%;
-      }
-    }
-
-    .input-gender {
-      flex-direction: row;
-      flex-wrap: wrap;
-
-      .gender-item {
-        display: flex;
-        width: 33%;
-        padding-bottom: 0px;
-      }
-
-      .gender-title {
-        width: 100%;
-        margin-bottom: 0;
-      }
-    }
-  }
-}
-
-.input-style-common {
-  label {
-    font-size: 13px;
-    margin-bottom: 5px;
-    span {
-      color: red;
-    }
-  }
-  input {
-    border: 1px solid #cacaca;
-    padding: 10px;
-    outline: none;
-    border-radius: 4px
-  }
-
-  input:focus {
-    border: 1px solid #01b075;
-  }
-  input.invalid-value {
-  border: 1px solid #F65454;
-}
-}
-
-.mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(127, 140, 141, 0.5);
-  z-index: 5;
-}
-
-.form__radio-input {
-  display: none;
-}
-
-.form__label-radio {
-  font-size: 1.6rem;
-  cursor: pointer;
-  position: relative;
-  padding-left: 1.5rem;
-  line-height: 100%;
-}
-
-.form__radio-button {
-  height: 20px;
-  width: 20px;
-  border: 2px solid #55c57a;
-  border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: -0.2rem;
-}
-.form__radio-button::after {
-  content: "";
-  display: block;
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #55c57a;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.input-style-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.input-info-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-
-  div.input-style-info:first-child {
-    width: 70%;
-  }
-
-  div.input-style-info:nth-child(2) {
-    width: 29%;
-  }
-}
-.form__radio-input:checked ~ .form__label-radio .form__radio-button::after {
-  opacity: 1;
-}
-
-.btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px;
-
-  &-delete {
-    padding: 10px;
-    border-radius: 4px;
-    margin-right: 20px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.5s;
-
-    &:hover {
-      background-color: #cacaca;
-    }
-  }
-
-  &-save {
-    padding: 10px 16px;
-    background-color: #01B075;
-    border-radius: 4px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.5s;
-
-    &:hover {
-      background-color: #2FBE8E;
-    }
-
-    .icon-save {
-      background-image: url('../../assets/icon/add.png');
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-      width: 15px;
-      height: 15px;
-      margin-right: 5px;
-    }
-  }
-}
-
-.btn-close {
-  background-image: url('../../assets/icon/x.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  transition: all 0.5s;
-  padding: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #cacaca;
-  }
-}
-
+@import '../../../scss/_variables.scss';
+@import './style';
 </style>

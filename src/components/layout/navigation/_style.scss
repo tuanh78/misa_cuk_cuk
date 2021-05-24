@@ -96,6 +96,7 @@
       font-size: 11px;
   
       p {
+        margin-bottom: 0;
         span {
           text-transform: capitalize;
         }
@@ -110,4 +111,22 @@
       display: flex;
       align-items: center;
     }
+  }
+
+  // nav list
+  button.page-link {
+    display: inline-block;
+  }
+  button.page-link {
+      font-size: 20px;
+      color: #29b3ed;
+      font-weight: 500;
+  }
+  .offset{
+    width: 500px !important;
+    margin: 20px auto;  
+  }
+
+  .q-pa-lg {
+    padding: 0;
   }
