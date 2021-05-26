@@ -17,6 +17,7 @@ export default {
   align-items: center;
   justify-content: center;
   width: 54px;
+  height: 40px;
   border: 1px solid #cacaca;
   border-radius: 4px;
   transition: 0.5s;

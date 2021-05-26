@@ -9,6 +9,7 @@
       &-detail {
         font-family: $font-family-title;
         font-size: $font-size-title;
+        line-height: 40px;
       }
       .icon-add {
         background-image: url("../../assets/icon/add.png");
@@ -25,6 +26,26 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+      .group-btn {
+        display: flex;
+      }
+      .btn-delete-multiple {
+        width: 54px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #c0392b;
+        color: $color-white;
+        border-radius: 4px;
+        margin-right: 20px;
+        cursor: pointer;
+        text-transform: capitalize;
+        transition: all 0.5s;
+
+        &:hover {
+          background-color: #e74c3c;
+        }
+      }
     }
   
     .main-content-ctn {
@@ -48,6 +69,10 @@
                 background-color: $color-white;
                 z-index: 2;
               }
+
+              th.input-check-top {
+                z-index: 3;
+              }
             }
           }
   
@@ -64,6 +89,7 @@
           td {
             text-align: left;
             padding: 15px 0;
+            background-color: $color-white;
           }
   
           .border-bottom {
@@ -78,7 +104,8 @@
           }
   
           .number {
-            min-width: 40px;
+            min-width: 100px;
+            text-align: center;
           }
   
           .customer-code {
@@ -119,6 +146,14 @@
   
           .customer-card-code {
             min-width: 150px;
+          }
+
+          .tool-remove {
+            min-width: 70px;
+            text-align: center;
+            position: sticky;
+            right: 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
           }
   
         }
@@ -242,5 +277,30 @@
     background-size: cover;
     scroll-behavior: initial;
     z-index: 2;
+  }
+
+  .input-check {
+    position: sticky;
+    left: 0;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
+  .input-check-top {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+
+  .btn-delete {
+    background-color: #c0392b;
+    color: $color-white;
+    border-radius: 4px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: #e74c3c;
+    }
   }
   

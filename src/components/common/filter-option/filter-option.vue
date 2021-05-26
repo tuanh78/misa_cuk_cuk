@@ -30,13 +30,16 @@
 export default {
   data () {
     return {
-      selectedValue: null,
+      selectedValue: this.selectedOption,
       options: this.optionValues
     }
   },
   props: {
     optionValues: {
       type: Array
+    },
+    selectedOption: {
+      type: Object
     }
   },
 

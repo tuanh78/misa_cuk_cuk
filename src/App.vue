@@ -9,16 +9,19 @@
         </div>
       </div>
     </div>
+    <success-notification></success-notification>
   </div>
 </template>
 
 <script>
 import TheNavbar from './components/layout/the-navbar.vue'
 import TheHeader from './components/layout/the-header.vue'
+import SuccessNotification from './components/common/success-notification/success-notification.vue'
 export default {
   components: {
     TheNavbar,
-    TheHeader
+    TheHeader,
+    SuccessNotification
   }
 }
 </script>
@@ -114,5 +117,33 @@ a {
 
 .q-btn-item {
   margin-right: 10px;
+}
+
+.font-family-bold {
+  font-family: $font-family-title2;
+}
+
+.color-icon-warning-add {
+  color: $color-warning-add;
+}
+
+.color-icon-warning-delete {
+  color: $color-error;
+}
+
+.warning-btn-delete-customer {
+  background-color: $color-error;
+
+  &:hover {
+    background-color: $color-pink;
+  }
+}
+
+.warning-btn-add-customer {
+  background-color: $color-green-default;
+
+  &:hover {
+    background-color: $color-green-hover;
+  }
 }
 </style>

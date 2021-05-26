@@ -14,15 +14,15 @@
     .icon-style {
         font-size: 24px;
         color: $color-green-primary;
-        margin-right: 10px;
+        margin-right: 30px;
+    }
+
+    .close {
+        font-size: 24px;
+        color: $color-green-primary
     }
 }
 
-.close {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 90%;
-    font-size: 24px;
-    color: $color-green-primary;
+.description {
+    margin-right: 40px;
 }

@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       dateStringFormat: ConstantValue.DATE_FORMAT_STRING,
-      date: '',
+      date: this.originalDate,
       localeDatePicker: {
         weekdays: ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
         months: [
@@ -39,6 +39,12 @@ export default {
           'Tháng 12'
         ]
       }
+    }
+  },
+  props: {
+    originalDate: {
+      type: String,
+      default: ''
     }
   },
   methods: {

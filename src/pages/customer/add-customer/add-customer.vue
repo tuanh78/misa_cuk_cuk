@@ -1,246 +1,284 @@
 <template>
   <div class="customer-ctn">
-    <transition
-      enter-active-class="animate__animated animate__fadeIn"
-      leave-active-class="animate__animated animate__fadeOut"
-    >
-      <div v-if="isShow">
-        <div
-          id="draggable-container"
-          class="add-customer"
-          @keydown.27="isShowPopup = true"
-          ref="draggableContainer"
-          @mousedown="dragMouseDown"
-        >
-          <h3 class="add-title">Thông tin khách hàng</h3>
+    <div>
+      <div
+        id="draggable-container"
+        class="add-customer"
+        @keydown.27="isShowPopup = true"
+        ref="draggableContainer"
+        @mousedown="dragMouseDown"
+      >
+        <h3 class="add-title">Thông tin khách hàng</h3>
 
-          <div class="input-group">
-            <div class="input-group-common">
-              <div class="avatar">
-                <div class="avatar-img">
-                  <input type="file" id="avatar" hidden />
-                  <label class="img-avt"></label>
-                </div>
-                <p class="avatar-detail">
-                  Vui lòng chọn ảnh có định dạng
-                  <span>.jpg, .jpeg, .png, .gif.</span>
-                </p>
+        <div class="input-group">
+          <div class="input-group-common">
+            <div class="avatar">
+              <div class="avatar-img">
+                <input type="file" id="avatar" hidden />
+                <label class="img-avt"></label>
               </div>
-              <div class="user-info-comon">
-                <div class="input-item input-style-common">
-                  <label>Mã khách hàng (<span>*</span>)</label>
-                  <input
-                    v-model="customer.customerCode"
-                    ref="code"
-                    type="text"
-                    class="customer-code"
-                    @keypress="[RemoveInvalid('customer-code'), errors.customerCode = false]"
-                  />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.customerCode !== ''"
-                      class="icon-remove-text"
-                      @click="customer.customerCode = ''"
-                    ></div>
-                  </transition>
-                  <tooltip :isShow="errors.customerCode" title="Mã khách hàng" description="Không được để trống"></tooltip>
-                </div>
-                <div class="input-item input-style-common">
-                  <label>Họ và tên (<span>*</span>)</label>
-                  <input v-model="customer.fullName" type="text" class="fullname" @keypress="[RemoveInvalid('fullname'), errors.fullName = false]"/>
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.fullName !== ''"
-                      class="icon-remove-text"
-                      @click="customer.fullName = ''"
-                    ></div>
-                  </transition>
-                  <tooltip :isShow="errors.fullName" title="Tên khách hàng" description="Không được để trống"></tooltip>
-                </div>
-                <div class="input-item input-style-common">
-                  <label>Mã thẻ thành viên</label>
-                  <input v-model="customer.memberCardCode" type="text" />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.memberCardCode !== ''"
-                      class="icon-remove-text"
-                      @click="customer.memberCardCode = ''"
-                    ></div>
-                  </transition>
-                </div>
-                <div class="input-item input-style-common">
-                  <label>Nhóm khách hàng</label>
-                  <filter-option @updateValue="UpdateCustomerGroup" :optionValues="customerGroups"></filter-option>
-                </div>
-                <div class="input-item input-style-common">
-                  <label>Ngày sinh</label>
-                  <v-datepicker @updateDate="UpdateDateOfBirth"></v-datepicker>
-                </div>
-                <div class="input-item input-style-common input-gender">
-                  <label class="gender-title">Giới tính</label>
-                  <div class="gender-item">
-                    <input
-                      v-model="customer.gender"
-                      value="0"
-                      type="radio"
-                      name="gender"
-                      id="nam"
-                      class="form__radio-input"
-                    />
-                    <label
-                      class="form__label-radio form__radio-label"
-                      for="nam"
-                    >
-                      <span class="form__radio-button"></span> Nam
-                    </label>
-                  </div>
-                  <div class="gender-item">
-                    <input
-                      v-model="customer.gender"
-                      value="1"
-                      type="radio"
-                      name="gender"
-                      id="nu"
-                      class="form__radio-input"
-                    />
-                    <label class="form__label-radio form__radio-label" for="nu">
-                      <span class="form__radio-button"></span> Nữ
-                    </label>
-                  </div>
-                  <div class="gender-item">
-                    <input
-                      v-model="customer.gender"
-                      value="2"
-                      type="radio"
-                      name="gender"
-                      id="khac"
-                      class="form__radio-input"
-                    />
-                    <label
-                      class="form__label-radio form__radio-label"
-                      for="khac"
-                    >
-                      <span class="form__radio-button"></span> Khác
-                    </label>
-                  </div>
-                </div>
-              </div>
+              <p class="avatar-detail">
+                Vui lòng chọn ảnh có định dạng
+                <span>.jpg, .jpeg, .png, .gif.</span>
+              </p>
             </div>
-
-            <div class="input-group-detail">
-              <div class="input-info-item">
-                <div class="input-style-common input-style-info">
-                  <label>Email</label>
-                  <input v-model="customer.email" type="text" />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.email !== ''"
-                      class="icon-remove-text icon-remove-custom"
-                      @click="customer.email = ''"
-                    ></div>
-                  </transition>
-                </div>
-                <div class="input-style-common input-style-info">
-                  <label>Số điện thoại (<span>*</span>)</label>
-                  <input v-model="customer.phoneNumber" type="text" @keypress="[RemoveInvalid('phone-number'), errors.phoneNumber = false]" class="phone-number" />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.phoneNumber !== ''"
-                      class="icon-remove-text icon-remove-custom"
-                      @click="customer.phoneNumber = ''"
-                    ></div>
-                  </transition>
-                  <tooltip :isShow="errors.phoneNumber" title="Số điện thoại" description="Không được để trống"></tooltip>
-                </div>
-              </div>
-
-              <div class="input-info-item">
-                <div class="input-style-common input-style-info">
-                  <label>Tên công ty</label>
-                  <input v-model="customer.companyName" type="text" />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.companyName !== ''"
-                      class="icon-remove-text icon-remove-custom"
-                      @click="customer.companyName = ''"
-                    ></div>
-                  </transition>
-                </div>
-                <div class="input-style-common input-style-info">
-                  <label>Mã số thuế</label>
-                  <input v-model="customer.companyTaxCode" type="text" />
-                  <transition
-                    enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut"
-                  >
-                    <div
-                      v-if="customer.companyTaxCode !== ''"
-                      class="icon-remove-text icon-remove-custom"
-                      @click="customer.companyTaxCode = ''"
-                    ></div>
-                  </transition>
-                </div>
-              </div>
-              <div class="input-style-common input-style-info">
-                <label>Địa chỉ</label>
-                <input v-model="customer.address" type="text" />
+            <div class="user-info-common">
+              <div class="input-item input-style-common">
+                <label>Mã khách hàng (<span>*</span>)</label>
+                <input
+                  v-model="customer.customerCode"
+                  ref="code"
+                  type="text"
+                  class="customer-code"
+                  @keypress="
+                    [
+                      RemoveInvalid('customer-code'),
+                      (errors.customerCode = false),
+                    ]
+                  "
+                />
                 <transition
                   enter-active-class="animate__animated animate__fadeIn"
                   leave-active-class="animate__animated animate__fadeOut"
                 >
                   <div
-                    v-if="customer.address !== ''"
-                    class="icon-remove-text icon-remove-custom"
-                    @click="customer.address = ''"
+                    v-if="customer.customerCode !== ''"
+                    class="icon-remove-text"
+                    @click="customer.customerCode = ''"
+                  ></div>
+                  <tooltip
+                    v-if="errors.customerCode"
+                    title="Mã khách hàng"
+                    description="Không được để trống"
+                  ></tooltip>
+                </transition>
+              </div>
+              <div class="input-item input-style-common">
+                <label>Họ và tên (<span>*</span>)</label>
+                <input
+                  v-model="customer.fullName"
+                  type="text"
+                  class="fullname"
+                  @keypress="
+                    [RemoveInvalid('fullname'), (errors.fullName = false)]
+                  "
+                />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.fullName !== ''"
+                    class="icon-remove-text"
+                    @click="customer.fullName = ''"
+                  ></div>
+                  <tooltip
+                    v-if="errors.fullName"
+                    title="Tên khách hàng"
+                    description="Không được để trống"
+                  ></tooltip>
+                </transition>
+              </div>
+              <div class="input-item input-style-common">
+                <label>Mã thẻ thành viên</label>
+                <input v-model="customer.memberCardCode" type="text" />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.memberCardCode !== ''"
+                    class="icon-remove-text"
+                    @click="customer.memberCardCode = ''"
                   ></div>
                 </transition>
+              </div>
+              <div class="input-item input-style-common">
+                <label>Nhóm khách hàng</label>
+                <filter-option
+                  @updateValue="UpdateCustomerGroup"
+                  :optionValues="customerGroups"
+                ></filter-option>
+              </div>
+              <div class="input-item input-style-common">
+                <label>Ngày sinh</label>
+                <v-datepicker @updateDate="UpdateDateOfBirth"></v-datepicker>
+              </div>
+              <div class="input-item input-style-common input-gender">
+                <label class="gender-title">Giới tính</label>
+                <div class="gender-item">
+                  <input
+                    v-model="customer.gender"
+                    value="0"
+                    type="radio"
+                    name="gender"
+                    id="nam"
+                    class="form__radio-input"
+                  />
+                  <label class="form__label-radio form__radio-label" for="nam">
+                    <span class="form__radio-button"></span> Nam
+                  </label>
+                </div>
+                <div class="gender-item">
+                  <input
+                    v-model="customer.gender"
+                    value="1"
+                    type="radio"
+                    name="gender"
+                    id="nu"
+                    class="form__radio-input"
+                  />
+                  <label class="form__label-radio form__radio-label" for="nu">
+                    <span class="form__radio-button"></span> Nữ
+                  </label>
+                </div>
+                <div class="gender-item">
+                  <input
+                    v-model="customer.gender"
+                    value="2"
+                    type="radio"
+                    name="gender"
+                    id="khac"
+                    class="form__radio-input"
+                  />
+                  <label class="form__label-radio form__radio-label" for="khac">
+                    <span class="form__radio-button"></span> Khác
+                  </label>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="btn">
-            <div class="btn-delete" @click="HiddenPopupAndForm">Hủy</div>
+          <div class="input-group-detail">
+            <div class="input-info-item">
+              <div class="input-style-common input-style-info">
+                <label>Email</label>
+                <input v-model="customer.email" type="text" />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.email !== ''"
+                    class="icon-remove-text icon-remove-custom"
+                    @click="customer.email = ''"
+                  ></div>
+                </transition>
+              </div>
+              <div class="input-style-common input-style-info">
+                <label>Số điện thoại (<span>*</span>)</label>
+                <input
+                  v-model="customer.phoneNumber"
+                  type="text"
+                  @keypress="
+                    [
+                      RemoveInvalid('phone-number'),
+                      (errors.phoneNumber = false),
+                    ]
+                  "
+                  class="phone-number"
+                />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.phoneNumber !== ''"
+                    class="icon-remove-text icon-remove-custom"
+                    @click="customer.phoneNumber = ''"
+                  ></div>
+                  <tooltip
+                    v-if="errors.phoneNumber"
+                    title="Số điện thoại"
+                    description="Không được để trống"
+                  ></tooltip>
+                </transition>
+              </div>
+            </div>
 
-            <div class="btn-save" @click="AddCustomer">
-              <div class="icon-save"></div>
-              Lưu
+            <div class="input-info-item">
+              <div class="input-style-common input-style-info">
+                <label>Tên công ty</label>
+                <input v-model="customer.companyName" type="text" />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.companyName !== ''"
+                    class="icon-remove-text icon-remove-custom"
+                    @click="customer.companyName = ''"
+                  ></div>
+                </transition>
+              </div>
+              <div class="input-style-common input-style-info">
+                <label>Mã số thuế</label>
+                <input v-model="customer.companyTaxCode" type="text" />
+                <transition
+                  enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut"
+                >
+                  <div
+                    v-if="customer.companyTaxCode !== ''"
+                    class="icon-remove-text icon-remove-custom"
+                    @click="customer.companyTaxCode = ''"
+                  ></div>
+                </transition>
+              </div>
+            </div>
+            <div class="input-style-common input-style-info">
+              <label>Địa chỉ</label>
+              <input v-model="customer.address" type="text" />
+              <transition
+                enter-active-class="animate__animated animate__fadeIn"
+                leave-active-class="animate__animated animate__fadeOut"
+              >
+                <div
+                  v-if="customer.address !== ''"
+                  class="icon-remove-text icon-remove-custom"
+                  @click="customer.address = ''"
+                ></div>
+              </transition>
             </div>
           </div>
-          <div class="btn-close" @click="CloseFormAdd"></div>
         </div>
-        <warning-add-customer
-          :isShow="isShowPopup"
+
+        <div class="btn">
+          <div class="btn-delete" @click="HiddenPopupAndForm">Hủy</div>
+
+          <div class="btn-save" @click="AddCustomer">
+            <div class="icon-save"></div>
+            Lưu
+          </div>
+        </div>
+        <div class="btn-close" @click="CloseFormAdd"></div>
+      </div>
+      <transition
+        enter-active-class="animate__animated animate__fadeIn"
+        leave-active-class="animate__animated animate__fadeOut"
+      >
+        <popup-warning-customer
+          v-if="isShowPopup"
           :HiddenPopup="HiddenPopup"
           :HiddenPopupAndForm="HiddenPopupAndForm"
-        ></warning-add-customer>
-        <div class="mask" @click="CloseFormAdd"></div>
-      </div>
-    </transition>
+          icon="exclamation-triangle"
+          colorIcon="color-icon-warning-add"
+          title="Đóng Form thêm khách hàng"
+          description='Bạn có chắc muốn đóng form nhập <span class="font-family-bold">"Khách hàng"</span> hay không?'
+          textBtnLeft="Tiếp tục nhập"
+          textBtnRight="Đóng"
+          bgColorBtnRight="warning-btn-add-customer"
+        ></popup-warning-customer>
+      </transition>
+      <div class="mask" @click="CloseFormAdd"></div>
+    </div>
     <success-notification></success-notification>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import WarningAddCustomer from '../warning-popup-add-customer.vue'
+import PopupWarningCustomer from '../popup-warning-customer/popup-waring-customer'
 import VDatepicker from '../../../components/common/datepicker/v-datepicker'
 import FilterOption from '../../../components/common/filter-option/filter-option.vue'
 import SuccessNotification from '../../../components/common/success-notification/success-notification'
@@ -278,17 +316,13 @@ export default {
     }
   },
   components: {
-    WarningAddCustomer,
+    PopupWarningCustomer,
     VDatepicker,
     FilterOption,
     SuccessNotification,
     Tooltip
   },
   props: {
-    isShow: {
-      type: Boolean,
-      default: false
-    },
     HiddenForm: {
       type: Function
     }
@@ -367,7 +401,9 @@ export default {
     AddCustomer () {
       for (const key in this.customer) {
         if (key === 'customerCode' && this.customer[key] === '') {
-          this.$el.querySelector('.customer-code').classList.add('invalid-value')
+          this.$el
+            .querySelector('.customer-code')
+            .classList.add('invalid-value')
           this.errors.customerCode = true
           return
         }
@@ -377,15 +413,21 @@ export default {
           return
         }
         if (key === 'phoneNumber' && this.customer[key] === '') {
-          this.$el.querySelector('.phone-number').classList.add('invalid-value')
+          this.$el
+            .querySelector('.phone-number')
+            .classList.add('invalid-value')
           this.errors.phoneNumber = true
           return
         }
       }
-      axios.post('https://localhost:44389/api/v1/Customers', this.customer)
+      axios
+        .post('https://localhost:44389/api/v1/Customers', this.customer)
         .then((result) => {
           if (result.status === 201) {
-            this.$notify({ group: 'success', text: 'Thêm khách hàng thành công !' })
+            this.$notify({
+              group: 'success',
+              text: 'Thêm khách hàng thành công !'
+            })
             this.customer = {
               customerCode: '',
               fullName: '',
@@ -401,7 +443,8 @@ export default {
             }
             this.HiddenForm()
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           console.log(err)
         })
     },
